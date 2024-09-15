@@ -9,6 +9,7 @@
     <script defer type="module" src="./ts/script.ts"></script>
 </head>
 <body>
+<canvas id="webgl"></canvas>
 <header>
     <nav class="navbar fixed-top px-2 px-lg-4">
         <div class="container-fluid justify-content-end">
@@ -92,18 +93,26 @@
                                     class="fa-brands fa-unity display-1"></i></button>
                         </li>
                         <li class="m-3">
-                            <button class="threejs" type="button" aria-selected="false"><img src="/icons/threejs.svg" alt="Three.js logo">
+                            <button class="threejs" type="button" aria-selected="false"><img src="/icons/threejs.svg"
+                                                                                             alt="Three.js logo">
                             </button>
                         </li>
                         <li class="m-3">
-                            <button class="maya" type="button" aria-selected="false"><img src="/icons/maya.svg" alt="Autodesk Maya logo">
+                            <button class="maya" type="button" aria-selected="false"><img src="/icons/maya.svg"
+                                                                                          alt="Autodesk Maya logo">
                             </button>
                         </li>
                     </ul>
                 </div>
-                <div class="row col-12 col-lg-6 mt-4 mt-lg-0">
-
-                </div>
+            </div>
+            <div class="row col-12 col-lg-6">
+                <ul class="d-flex flex-column list-unstyled align-items-center">
+                    <li class="mb-2 lead"><span class="fw-semibold size">Experience:</span> 5 Years</li>
+                    <li class="mb-2  lead"><span class="fw-semibold">Confidence Level:</span> Intermediate</li>
+                    <li class="mb-2">
+                        <button type="button" class="btn btn-lg btn-outline-secondary">View HTML Projects</button>
+                    </li>
+                </ul>
             </div>
         </div>
     </section>
@@ -117,6 +126,5 @@
 <footer class="px-5">
 
 </footer>
-<canvas id="webgl"></canvas>
 </body>
 </html>
