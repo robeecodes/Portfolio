@@ -11,12 +11,13 @@ $btn-font-family: 'Lexend Deca', Inter, system-ui, Avenir, Helvetica, Arial, san
 
 $font-family-sans-serif: 'Lexend Deca', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 
-// Override Bootstrap Spacing
-$spacer: 2rem;
-
 // Override Bootstrap Colours
 
 @import "../../node_modules/bootstrap/scss/bootstrap";
+
+* {
+  box-sizing: border-box;
+}
 
 :root {
   text-rendering: optimizeLegibility;
@@ -38,12 +39,12 @@ $spacer: 2rem;
   z-index: 9999;
 }
 
-section {
-  position: relative;
-}
-
 #offcanvasNavbar {
   width: 40vw;
+}
+
+section {
+  position: relative;
 }
 
 .skills-list {
@@ -51,6 +52,7 @@ section {
     display: flex;
     align-items: center;
     justify-content: center;
+
     button {
       --colour: #f46a39;
       --filter-svg: invert(100%) sepia(0%) saturate(7500%) hue-rotate(123deg) brightness(103%) contrast(104%);
@@ -78,7 +80,7 @@ section {
       }
 
       img {
-        height: clamp(2.8125em, calc(2.8125rem + ((1vw - 0.2625em) * 2.3333)), 5em);
+        height: calc(1.475rem + 2.2vw);
         width: auto;
         min-height: 0;
       }
@@ -117,12 +119,20 @@ section {
 
       &.maya {
         --filter-svg: brightness(0) saturate(100%) invert(61%) sepia(96%) saturate(863%) hue-rotate(162deg) brightness(86%) contrast(82%);
+
         img {
           filter: brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(2%) hue-rotate(302deg) brightness(101%) contrast(101%);
         }
       }
     }
   }
+}
+
+// General Styling Utils
+.glass {
+  background-image: linear-gradient(to right, hsla(0, 0, 0, 1), hsla(0, 0, 0, 0.75), hsla(0, 0, 0, 0.5), hsla(0, 0, 0, 0));
+  backdrop-filter: blur(.5em);
+  //box-shadow: 0 0 2em 2em hsla(0, 0, 0, 0.5);
 }
 
 @media only screen and (max-width: (calc(992 / 16) * 1em)) {
