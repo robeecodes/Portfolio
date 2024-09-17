@@ -13,7 +13,7 @@
 <header>
     <nav class="navbar fixed-top px-2 px-lg-4">
         <div class="container-fluid justify-content-end">
-            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+            <button class="navbar-toggler bg-dark" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
                     aria-expanded="false"
                     aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -118,36 +118,36 @@
             </div>
         </div>
     </section>
-    <section id="projects">
+    <section id="projects" class="bg-light">
         <div class="container p-5 text-center">
-            <h2 class="display-1 text-black">Projects</h2>
+            <h2 class="display-1 text-dark">Projects</h2>
             <div class="input-group mb-3 d-flex w-100 justify-content-md-evenly my-4 flex-row flex-md-wrap flex-nowrap overflow-auto px-5">
-                <div class="filter-box d-flex align-items-center mb-3 mx-3">
+                <div class="filter-box d-flex align-items-center mb-3 mx-3 threed">
                     <input type="checkbox" value="3D" aria-label="3D" id="3D">
                     <label class="form-check-label px-4 py-2 lead rounded-pill" for="3D">3D</label>
                 </div>
 
-                <div class="filter-box d-flex align-items-center mb-3 mx-3">
+                <div class="filter-box d-flex align-items-center mb-3 mx-3 graphic-design">
                     <input type="checkbox" value="Graphic-Design" aria-label="Graphic-Design" id="Graphic-Design">
                     <label class="form-check-label px-4 py-2 lead rounded-pill" for="Graphic-Design">Graphic Design</label>
                 </div>
 
-                <div class="filter-box d-flex align-items-center mb-3 mx-3">
+                <div class="filter-box d-flex align-items-center mb-3 mx-3 interactive">
                     <input type="checkbox" value="Interactive" aria-label="Interactive" id="Interactive">
                     <label class="form-check-label px-4 py-2 lead rounded-pill" for="Interactive">Interactive</label>
                 </div>
 
-                <div class="filter-box d-flex align-items-center mb-3 mx-3">
+                <div class="filter-box d-flex align-items-center mb-3 mx-3 p5js">
                     <input type="checkbox" value="P5.js" aria-label="P5.js" id="P5.js">
                     <label class="form-check-label px-4 py-2 lead rounded-pill" for="P5.js">P5.js</label>
                 </div>
 
-                <div class="filter-box d-flex align-items-center mb-3 mx-3">
+                <div class="filter-box d-flex align-items-center mb-3 mx-3 unity">
                     <input type="checkbox" value="Unity" aria-label="Unity" id="Unity">
                     <label class="form-check-label px-4 py-2 lead rounded-pill" for="Unity">Unity</label>
                 </div>
 
-                <div class="filter-box d-flex align-items-center mb-3 mx-3">
+                <div class="filter-box d-flex align-items-center mb-3 mx-3 web-dev">
                     <input type="checkbox" value="Web-Development" aria-label="Web-Development" id="Web-Development">
                     <label class="form-check-label px-4 py-2 lead rounded-pill" for="Web-Development">Web Development</label>
                 </div>
@@ -155,33 +155,38 @@
 
             <div id="projects-grid">
                 <div class="card" style="width: 18rem;" data-tags="unity,3d,interactive">
-                    <img src="..." class="card-img-top" alt="...">
+                    <img src="images/pirate-game.webp" class="card-img-top" alt="Screenshot of a pirate in a tavern.">
                     <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <h6 class="mb-2 badge rounded-pill bg-danger">Card subtitle</h6>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                        <h5 class="card-title">Pirates</h5>
+                        <h6 class="mb-2 badge rounded-pill threed">3D</h6>
+                        <h6 class="mb-2 badge rounded-pill interactive">Interactive</h6>
+                        <h6 class="mb-2 badge rounded-pill unity">Unity</h6>
+                        <p class="card-text">Dock at an unknown island and explore a highly interactive 3d environment.</p>
+                        <a href="https://mega.nz/file/EZAyFLhQ#HzaYjnzRyxu8OVpTgaKXJYWYB8DIxXTl8T07g67C7z4" class="btn btn-primary my-2" target="_blank"><i class="fa-brands fa-windows me-2"></i>Download .7z</a>
+                        <a href="https://github.com/robeecodes/Pirates" class="btn btn-primary my-2" target="_blank"><i class="fa-brands fa-github me-2"></i>View Repository</a>
                     </div>
                 </div>
                 <div class="card" style="width: 18rem;">
-                    <img src="..." class="card-img-top" alt="...">
+                    <img src="images/metal-mansion.webp" class="card-img-top" alt="Screenshot of the Metal Mansion game">
                     <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <h6 class="mb-2 badge rounded-pill bg-danger">Card subtitle</h6>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                        <h5 class="card-title">Metal Mansion</h5>
+                        <h6 class="mb-2 badge rounded-pill interactive">Interactive</h6>
+                        <h6 class="mb-2 badge rounded-pill p5js">P5.js</h6>
+                        <p class="card-text">A run-and-gun platformer inspired by classics like Mega Man. Choose between two characters with unique abilities and destroy the robot threat.</p>
+                        <a href="https://robeecodes.github.io/metal-mansion/" class="btn btn-primary my-2" target="_blank"><i class="fa-solid fa-star-of-life me-2" ></i>Play Online</a>
+                        <a href="https://github.com/robeecodes/metal-mansion" class="btn btn-primary my-2" target="_blank"><i class="fa-brands fa-github me-2"></i>View Repository</a>
                     </div>
                 </div>
                 <div class="card" style="width: 18rem;">
-                    <img src="..." class="card-img-top" alt="...">
+                    <img src="images/gwds.webp" class="card-img-top" alt="Screenshot of my Graphic and Web Design Studio Portfolio">
                     <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <h6 class="mb-2 badge rounded-pill bg-danger">Card subtitle</h6>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                        <h5 class="card-title">Graphic and Web Design Studio</h5>
+                        <h6 class="mb-2 badge rounded-pill graphic-design">Graphic Design</h6>
+                        <h6 class="mb-2 badge rounded-pill interactive">Interactive</h6>
+                        <h6 class="mb-2 badge rounded-pill web-dev">Web Development</h6>
+                        <p class="card-text">A portfolio of design pieces relating to the web, poster design and typography.</p>
+                        <a href="https://robeecodes.github.io/gwds-website/" class="btn btn-primary my-2" target="_blank"><i class="fa-solid fa-link me-2"></i>View Online</a>
+                        <a href="https://github.com/robeecodes/gwds-website" class="btn btn-primary my-2" target="_blank"><i class="fa-brands fa-github me-2"></i>View Repository</a>
                     </div>
                 </div>
                 <div class="card" style="width: 18rem;">

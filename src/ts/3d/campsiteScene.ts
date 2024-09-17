@@ -6,6 +6,9 @@ import GUI from 'lil-gui'
 import gsap from 'gsap'
 import {ScrollToPlugin} from 'gsap/ScrollToPlugin';
 
+// @ts-ignore
+import { throttle } from 'lodash';
+
 gsap.registerPlugin(ScrollToPlugin);
 
 import {sceneryMtls, kaoriMtls, renMtls, sceneryTextures} from "./materials.ts";
@@ -65,6 +68,7 @@ export function campsiteScene(): void {
                 if (child.name === "directionalLight1") {
                     directionalLight = child;
                     directionalLight.castShadow = true;
+                    directionalLight.intensity = 7;
 
                     directionalLight.target.position.set(15, 0, 0);
                     scene.add(directionalLight.target);
@@ -262,7 +266,7 @@ export function campsiteScene(): void {
     /**
      * Lights
      */
-    ambientLight = new THREE.AmbientLight(0xffffff, 2.0);
+    ambientLight = new THREE.AmbientLight(0xfcefbb, 0.6);
 
     scene.add(ambientLight);
 
@@ -332,100 +336,83 @@ export function campsiteScene(): void {
      */
     let isNight = false;
 
-    function disableScroll() {
-        document.body.style.overflow = 'hidden';
-    }
-
-    function enableScroll() {
-        document.body.style.overflow = 'auto';
-    }
-
     let fireLightActive: boolean = false;
 
     function transitionToNight(isNight: boolean) {
-        // Disable scrolling while animating
-        disableScroll();
-
-        // Scroll to the correct section (#hero for day, #skills for night)
-        const targetSection = isNight ? "#skills" : "#hero";
-
-        gsap.to(window, {
-            scrollTo: {
-                y: targetSection,  // Scroll to the target section
-                autoKill: false    // Prevent killing the scroll during animation
-            },
+        // Once the scroll is complete, start light animations
+        gsap.to(ambientLight, {
             duration: 0.75,
+            intensity: isNight ? 0 : 0.6,
             ease: "power2.out",
+            overwrite: true
+        });
+        gsap.to(directionalLight, {
+            duration: 0.75,
+            intensity: isNight ? 0 : 7,
+            ease: "power2.out",
+            overwrite: true
+        });
+        gsap.to(fireLight, {
+            duration: isNight ? 2 : 0.2,
+            intensity: isNight ? 1 : 0,
+            delay: isNight ? 2 : 0,
+            ease: "power2.out",
+            overwrite: true,
             onComplete: () => {
-                // Once the scroll is complete, start light animations
-                gsap.to(ambientLight, {
-                    duration: 0.75,
-                    intensity: isNight ? 0 : 2.0,
-                    ease: "power2.out"
-                });
-                gsap.to(directionalLight, {
-                    duration: 0.75,
-                    intensity: isNight ? 0 : 1.0,
-                    ease: "power2.out"
-                });
-                gsap.to(fireLight, {
-                    duration: 1,
-                    intensity: isNight ? 1 : 0,
-                    delay: isNight ? 1.5 : 0,
-                    ease: "power2.out",
-                    onComplete: () => {fireLightActive = isNight;}
-                });
-                if (fire) {
-                    gsap.to(fire.material, {
-                        duration: 1,
-                        opacity: isNight ? 1 : 0,
-                        delay: isNight ? 1.5 : 0,
-                        ease: "power2.out",
-                    });
-                }
-                gsap.to(canvas, {
-                    opacity: 1,
-                    duration: 1,
-                    ease: 'power2.out',
-                    background: `url(${isNight ? nightTimeImage : daytimeImage})`
-                });
-
-                // Enable scrolling again after animations are done
-                gsap.delayedCall(1, enableScroll);  // Delay to match the total animation duration
+                fireLightActive = isNight;
             }
+        });
+        if (fire) {
+            gsap.to(fire.material, {
+                duration: isNight ? 2 : 0.2,
+                opacity: isNight ? 1 : 0,
+                delay: isNight ? 2 : 0,
+                ease: "power2.out",
+                overwrite: true
+            });
+        }
+        gsap.to(canvas, {
+            opacity: 1,
+            duration: 1,
+            ease: 'power2.out',
+            background: `url(${isNight ? nightTimeImage : daytimeImage})`,
+            overwrite: true
         });
     }
 
     const heroElement = document.querySelector('#hero');
     const skillsElement = document.querySelector('#skills');
 
-    const options = {
-        root: null, // viewport
-        rootMargin: '0px',
-        threshold: 0.5
+    const handleScroll = () => {
+        // @ts-ignore
+        const heroRect = heroElement.getBoundingClientRect();
+        // @ts-ignore
+        const skillsRect = skillsElement.getBoundingClientRect();
+
+        // Calculate the halfway point of the hero section
+        const heroMidPoint = heroRect.top + heroRect.height / 2;
+
+        // Calculate the halfway point of the skills section
+        const skillsMidPoint = skillsRect.top + skillsRect.height / 2;
+
+        // Check if the midpoint of hero is within the viewport
+        if (heroMidPoint >= 0 && heroMidPoint <= window.innerHeight) {
+            // Hero section is halfway on the screen
+            isNight = false;
+            transitionToNight(false);
+        }
+        // Check if the midpoint of skills is within the viewport
+        else if (skillsMidPoint >= 0 && skillsMidPoint <= window.innerHeight) {
+            // Skills section is halfway on the screen
+            isNight = true;
+            transitionToNight(true);
+        }
     };
 
-    const callback = (entries: any[]) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                // Check which element is intersecting
-                if (entry.target.id === 'skills') {
-                    isNight = true;
-                    transitionToNight(true);
-                } else if (entry.target.id === 'hero') {
-                    isNight = false;
-                    transitionToNight(false);
-                }
-            }
-        });
-    };
+// Throttle the scroll event handler to run once every 100ms
+    const throttledScroll = throttle(handleScroll, 100);
 
-// Create the IntersectionObserver
-    const observer = new IntersectionObserver(callback, options);
-
-// Observe both the #hero and #skills sections
-    observer.observe(heroElement as Element);
-    observer.observe(skillsElement as Element);
+    window.addEventListener('scroll', throttledScroll);
 
     /**
      * Parallax

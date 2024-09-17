@@ -19,18 +19,21 @@ $font-family-sans-serif: 'Lexend Deca', Inter, system-ui, Avenir, Helvetica, Ari
   box-sizing: border-box;
 }
 
-//body {
-//  height: 100%;
-//  margin: 0;
-//  padding: 0;
-//
-//}
+html {
+  height: 100vh;
+  scroll-snap-type: y mandatory;
+}
 
+section {
+  scroll-snap-align: start;
+}
 
 :root {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --colour: #fff;
 }
 
 #webgl {
@@ -61,9 +64,9 @@ section {
   position: relative;
 }
 
-#projects {
-  background-color: #b4cdcd;
-}
+//#projects {
+//  background-color: #d6d3d3;
+//}
 
 .skills-list {
   li {
@@ -146,15 +149,41 @@ section {
   }
 }
 
+// Colours for tags
+.threed {
+  --colour: black;
+  }
+
+.graphic-design {
+  --colour: ForestGreen;
+}
+
+.interactive {
+  --colour: MidnightBlue;
+}
+
+.p5js {
+  --colour: #eb345e;
+}
+
+.unity {
+  --colour: #1a496a;
+}
+
+.web-dev {
+  --colour: HotPink;
+}
+
 .filter-box {
   label {
     padding: .1em .5em;
-    border: 1px solid crimson;
-    color: crimson;
+    border: .1em solid var(--colour);
+    color: var(--colour);
     white-space:nowrap;
+    font-weight: bold;
     &:hover {
       cursor: pointer;
-      background-color: crimson;
+      background-color: var(--colour);
       color: white;
     }
   }
@@ -168,13 +197,19 @@ section {
   }
 
   input[type="checkbox"]:checked + label {
-    background-color: crimson;
+    background-color: var(--colour);
     color: white;
     &:hover {
       cursor: pointer;
       background-color: transparent;
-      color: crimson;
+      color: var(--colour);
     }
+  }
+}
+
+#projects-grid {
+  .card .badge {
+    background-color: var(--colour);
   }
 }
 
