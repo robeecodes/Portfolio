@@ -19,6 +19,14 @@ $font-family-sans-serif: 'Lexend Deca', Inter, system-ui, Avenir, Helvetica, Ari
   box-sizing: border-box;
 }
 
+//body {
+//  height: 100%;
+//  margin: 0;
+//  padding: 0;
+//
+//}
+
+
 :root {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -30,6 +38,12 @@ $font-family-sans-serif: 'Lexend Deca', Inter, system-ui, Avenir, Helvetica, Ari
   top: 0;
   left: 0;
   outline: none;
+
+  background: url("textures/scenery/Day.webp") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 #gui {

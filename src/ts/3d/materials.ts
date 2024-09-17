@@ -1,3 +1,4 @@
+// @ts-ignore
 import * as THREE from 'three'
 
 /**
@@ -9,7 +10,12 @@ const textureLoader = new THREE.TextureLoader();
 const sceneryTextures = {
     grassTxt: textureLoader.load('textures/scenery/Grass.webp'),
     groundTxt: textureLoader.load('textures/scenery/Ground.webp'),
-    panoramaTxt: textureLoader.load('textures/scenery/Trees.webp')
+    panoramaTxt: textureLoader.load('textures/scenery/Trees.webp'),
+    fireTxts: {
+        one: textureLoader.load('textures/fire/fire_000.webp'),
+        two: textureLoader.load('textures/fire/fire_001.webp'),
+        three: textureLoader.load('textures/fire/fire_002.webp'),
+    }
 }
 
 Object.values(sceneryTextures).forEach(txt => {
@@ -50,7 +56,7 @@ const kaoriTextures = {
 
 Object.values(kaoriTextures).forEach(txt => {
     if (typeof txt === 'object' && !txt.isTexture) {
-        Object.values(txt).forEach(t => {
+        Object.values(txt).forEach((t: THREE.Texture) => {
             t.colorSpace = THREE.SRGBColorSpace;
             t.minFilter = THREE.NearestFilter;
             t.magFilter = THREE.NearestFilter;
@@ -80,7 +86,7 @@ const renTextures = {
 
 Object.values(renTextures).forEach(txt => {
     if (typeof txt === 'object' && !txt.isTexture) {
-        Object.values(txt).forEach(t => {
+        Object.values(txt).forEach((t: THREE.Texture) => {
             t.colorSpace = THREE.SRGBColorSpace;
             t.minFilter = THREE.NearestFilter;
             t.magFilter = THREE.NearestFilter;
@@ -96,7 +102,6 @@ Object.values(renTextures).forEach(txt => {
 /**
  * Materials
  */
-
 const sceneryMtls = {
     axeMtl: new THREE.MeshPhongMaterial({
         color: 0xe6eff0,
@@ -131,8 +136,11 @@ const sceneryMtls = {
     tentMtl: new THREE.MeshPhongMaterial({
         color: 0x41a8b9,
         shininess: 20,
-        roughness: 10
-    })
+    }),
+    fireMtl: new THREE.MeshLambertMaterial({
+    map: sceneryTextures.fireTxts.one,
+    transparent: true
+}),
 }
 
 // Kaori //
@@ -174,4 +182,4 @@ const renMtls = {
     })
 }
 
-export {sceneryMtls, kaoriMtls, renMtls}
+export {sceneryMtls, kaoriMtls, renMtls, sceneryTextures}

@@ -1,5 +1,5 @@
 import { campsiteScene } from './3d/campsiteScene.ts'
-// import gsap from 'gsap'
+import './DOM/navTransition.ts'
 
 import '/scss/style.scss'
 import 'bootstrap';
