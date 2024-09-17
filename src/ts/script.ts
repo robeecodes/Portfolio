@@ -1,5 +1,6 @@
 import { campsiteScene } from './3d/campsiteScene.ts'
 import './DOM/navTransition.ts'
+import './DOM/projects.ts'
 
 import '/scss/style.scss'
 import 'bootstrap';

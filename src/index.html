@@ -13,7 +13,8 @@
 <header>
     <nav class="navbar fixed-top px-2 px-lg-4">
         <div class="container-fluid justify-content-end">
-            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-expanded="false"
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                    aria-expanded="false"
                     aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -54,10 +55,13 @@
     <section id="hero" class="vh-100">
         <div class="container-fluid h-100">
             <div class="row align-items-start align-items-lg-center h-100">
-                <div class="d-flex flex-column justify-content-center col-12 col-lg-5 text-center text-lg-start glass ps-5 h-100 transitional-elem">
-                    <h1 class="display-1">Hi, I'm Robin</h1>
-                    <p class="lead mb-3 mb-lg-3">UK-Based Digital Media Developer</p>
-                    <button type="button" class="btn btn-lg btn-outline-primary align-self-lg-start align-self-center">Get In Touch!</button>
+                <div class="d-flex flex-column justify-content-center col-12 col-lg-5 text-center text-lg-start glass ps-0 ps-lg-5 h-100 transitional-elem">
+                    <h1 class="display-1 ms-0 ms-lg-3">Hi, I'm Robin</h1>
+                    <p class="lead mb-3 mb-lg-3 ms-0 ms-lg-3">UK-Based Digital Media Developer</p>
+                    <button type="button"
+                            class="btn btn-lg ms-0 ms-lg-3 btn-outline-primary align-self-lg-start align-self-center">
+                        Get In Touch!
+                    </button>
                 </div>
             </div>
         </div>
@@ -65,7 +69,7 @@
     <section id="skills" class="vh-100">
         <div class="container-fluid h-100">
             <div class="row h-100">
-                <div class="text-center text-lg-start col-12 col-lg-5 glass h-100 d-flex flex-column justify-content-center ps-5 transitional-elem">
+                <div class="text-center text-lg-start col-12 col-lg-5 glass h-100 d-flex flex-column justify-content-center ps-0 ps-lg-5 transitional-elem">
                     <h2 class="display-1">Skills</h2>
                     <ul class="skills-list d-flex flex-wrap list-unstyled justify-content-center">
                         <li class="m-2">
@@ -93,11 +97,13 @@
                                     class="fa-brands fa-unity display-4"></i></button>
                         </li>
                         <li class="m-2">
-                            <button class="threejs" type="button" aria-selected="false"><img src="/icons/threejs.svg" alt="Three.js logo">
+                            <button class="threejs" type="button" aria-selected="false"><img src="/icons/threejs.svg"
+                                                                                             alt="Three.js logo">
                             </button>
                         </li>
                         <li class="m-2">
-                            <button class="maya" type="button" aria-selected="false"><img src="/icons/maya.svg" alt="Autodesk Maya logo">
+                            <button class="maya" type="button" aria-selected="false"><img src="/icons/maya.svg"
+                                                                                          alt="Autodesk Maya logo">
                             </button>
                         </li>
                     </ul>
@@ -113,7 +119,93 @@
         </div>
     </section>
     <section id="projects">
+        <div class="container p-5 text-center">
+            <h2 class="display-1 text-black">Projects</h2>
+            <div class="input-group mb-3 d-flex w-100 justify-content-md-evenly my-4 flex-row flex-md-wrap flex-nowrap overflow-auto px-5">
+                <div class="filter-box d-flex align-items-center mb-3 mx-3">
+                    <input type="checkbox" value="3D" aria-label="3D" id="3D">
+                    <label class="form-check-label px-4 py-2 lead rounded-pill" for="3D">3D</label>
+                </div>
 
+                <div class="filter-box d-flex align-items-center mb-3 mx-3">
+                    <input type="checkbox" value="Graphic-Design" aria-label="Graphic-Design" id="Graphic-Design">
+                    <label class="form-check-label px-4 py-2 lead rounded-pill" for="Graphic-Design">Graphic Design</label>
+                </div>
+
+                <div class="filter-box d-flex align-items-center mb-3 mx-3">
+                    <input type="checkbox" value="Interactive" aria-label="Interactive" id="Interactive">
+                    <label class="form-check-label px-4 py-2 lead rounded-pill" for="Interactive">Interactive</label>
+                </div>
+
+                <div class="filter-box d-flex align-items-center mb-3 mx-3">
+                    <input type="checkbox" value="P5.js" aria-label="P5.js" id="P5.js">
+                    <label class="form-check-label px-4 py-2 lead rounded-pill" for="P5.js">P5.js</label>
+                </div>
+
+                <div class="filter-box d-flex align-items-center mb-3 mx-3">
+                    <input type="checkbox" value="Unity" aria-label="Unity" id="Unity">
+                    <label class="form-check-label px-4 py-2 lead rounded-pill" for="Unity">Unity</label>
+                </div>
+
+                <div class="filter-box d-flex align-items-center mb-3 mx-3">
+                    <input type="checkbox" value="Web-Development" aria-label="Web-Development" id="Web-Development">
+                    <label class="form-check-label px-4 py-2 lead rounded-pill" for="Web-Development">Web Development</label>
+                </div>
+            </div>
+
+            <div id="projects-grid">
+                <div class="card" style="width: 18rem;" data-tags="unity,3d,interactive">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <h6 class="mb-2 badge rounded-pill bg-danger">Card subtitle</h6>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the card's content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+                <div class="card" style="width: 18rem;">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <h6 class="mb-2 badge rounded-pill bg-danger">Card subtitle</h6>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the card's content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+                <div class="card" style="width: 18rem;">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <h6 class="mb-2 badge rounded-pill bg-danger">Card subtitle</h6>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the card's content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+                <div class="card" style="width: 18rem;">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <h6 class="mb-2 badge rounded-pill bg-danger">Card subtitle</h6>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the card's content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+                <div class="card" style="width: 18rem;">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <h6 class="mb-2 badge rounded-pill bg-danger">Card subtitle</h6>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the card's content.</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
     <section id="contact">
 
