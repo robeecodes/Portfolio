@@ -16,7 +16,7 @@ export function campsiteScene(): void {
      */
     const scene = new THREE.Scene();
 
-    const canvas = document.querySelector('canvas#webgl');
+    const canvas: HTMLCanvasElement | null = document.querySelector('canvas#webgl');
 
     /**
      * Load Models
