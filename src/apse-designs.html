@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>APSE Designs</title>
+    <link rel="stylesheet" href="./scss/style.scss">
+    <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/img-comparison-slider@8/dist/index.js"
+    ></script>
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/img-comparison-slider@8/dist/styles.css"
+    />
+    <script src="https://kit.fontawesome.com/a9d9878253.js" crossorigin="anonymous"></script>
+    <script defer type="module" src="./ts/DOM/apse-designs.ts"></script>
+</head>
+<body>
+<main>
+    <!-- Lightboxes -->
+    <template class="lightbox">
+        <h3 style="position:absolute; top:-2.5rem">Climate Change Vector Artwork</h3>
+        <img style="max-width:80vw; max-height: 70vh; object-fit: contain" src="images/apse/climate-change.webp"
+             alt="Artwork depicting climate change.">
+    </template>
+    <template class="lightbox">
+        <h3 style="position:absolute; top:-2.5rem">LED Stands</h3>
+        <img style="max-width:80vw; max-height: 70vh; object-fit: contain" src="images/apse/led-stands.webp"
+             alt="Photos depicting LED stands created for APSE.">
+    </template>
+    <template class="lightbox">
+        <h3 style="position:absolute; top:-2.5rem">Performance Networks 2021 Key Image</h3>
+        <img style="max-width:80vw; max-height: 70vh; object-fit: contain" src="images/apse/pn-2021.webp"
+             alt="Blackpool tower decorated with data imagery.">
+    </template>
+    <template class="lightbox">
+        <h3 style="position:absolute; top:-2.5rem">Before and After</h3>
+        <img-comparison-slider style="max-width:80vw; max-height: 85vh">
+            <img slot="first" src="images/apse/ni-agm-before.webp"
+                 alt="Image of solar panels in the sun."/>
+            <img slot="second" src="images/apse/ni-agm-after.webp"
+                 alt="Image of solar panels in the sun."/>
+        </img-comparison-slider>
+    </template>
+    <template class="lightbox">
+        <h3 style="position:absolute; top:-2.5rem">Performance Networks 2022 Desk Calendar</h3>
+        <img style="max-width:80vw; max-height: 70vh; object-fit: contain" src="images/apse/pn-desk-calendar.webp"
+             alt="A desk calendar for 2022.">
+    </template>
+    <template class="lightbox">
+        <h3 style="position:absolute; top:-2.5rem">Before and After</h3>
+        <img-comparison-slider style="max-width:80vw; max-height: 85vh">
+            <img slot="first" src="images/apse/annual-cover-before.webp"
+                 alt="Image of a road leading to the future."/>
+            <img slot="second" src="images/apse/annual-cover-after.webp"
+                 alt="Image of a road leading to the future."/>
+        </img-comparison-slider>
+    </template>
+    <template class="lightbox">
+        <h3 style="position:absolute; top:-2.5rem">ALDC Flyer</h3>
+        <img style="max-width:80vw; max-height: 70vh; object-fit: contain" src="images/apse/lib-dem-flyer.webp"
+             alt="Flyer for the ALDC Councillor Weekend 2022.">
+    </template>
+    <template class="lightbox">
+        <h3 style="position:absolute; top:-2.5rem">Before and After</h3>
+        <img-comparison-slider style="max-width:80vw; max-height: 85vh">
+            <img slot="first" src="images/apse/walton-hall-before.webp"
+                 alt="Image of Walton Hall."/>
+            <img slot="second" src="images/apse/walton-hall-after.webp"
+                 alt="Image of a Walton Hall."/>
+        </img-comparison-slider>
+    </template>
+    <template class="lightbox">
+        <h3 style="position:absolute; top:-2.5rem">What's On Flyer</h3>
+        <img style="max-width:80vw; max-height: 70vh; object-fit: contain" src="images/apse/whats-on.webp"
+             alt="Flyer to show upcoming APSE Events.">
+    </template>
+<!--  Cards -->
+    <section class="bg-light">
+        <div class="container-fluid p-5 text-center">
+            <h1 class="text-dark">Graphic Design for APSE</h1>
+            <p class="text-dark mb-5 fw-light">A collection of designs and photo edits I created while working at the <a
+                    href="https://www.apse.org.uk" target="_blank" class="link-info">Association for Public Service
+                Excellence.</a></p>
+            <div id="apse-designs">
+                <div class="card" style="width: 30%; min-width:20rem;">
+                    <button class="border-0 p-0">
+                        <img src="images/apse/climate-change.webp" class="card-img-top" style="height:12rem; object-fit: cover;"
+                             alt="Artwork depicting climate change.">
+                    </button>
+                    <div class="card-body">
+                        <p class="card-text text-light">Vector artwork depicting Climate Change for the 2020 January
+                            Policy Seminar.</p>
+                    </div>
+                </div>
+                <div class="card" style="width: 30%; min-width:20rem;">
+                    <button class="border-0 p-0">
+                        <img src="images/apse/led-stands.webp" class="card-img-top" style="height:12rem; object-fit: cover;"
+                             alt="Photos depicting LED stands created for APSE.">
+                    </button>
+                    <div class="card-body">
+                        <p class="card-text text-light">Photos depicting LED stands created for APSE.</p>
+                    </div>
+                </div>
+                <div class="card" style="width: 30%; min-width:20rem;">
+                    <button class="border-0 p-0">
+                        <img src="images/apse/pn-2021.webp" class="card-img-top" style="height:12rem; object-fit: cover;"
+                             alt="Blackpool tower decorated with data imagery.">
+                    </button>
+                    <div class="card-body">
+                        <p class="card-text text-light">Key image for the 2021 Performance Networks Seminar.</p>
+                    </div>
+                </div>
+                <div class="card" style="width: 30%; min-width:20rem;">
+                    <button class="border-0 p-0">
+                        <img src="images/apse/ni-agm-after.webp" class="card-img-top" style="height:12rem; object-fit: cover;"
+                             alt="Image of solar panels in the sun.">
+                    </button>
+                    <div class="card-body">
+                        <p class="card-text text-light">A photo edited for the 2022 Northern Ireland AGM.</p>
+                    </div>
+                </div>
+                <div class="card" style="width: 30%; min-width:20rem;">
+                    <button class="border-0 p-0">
+                        <img src="images/apse/pn-desk-calendar.webp" class="card-img-top" style="height:12rem; object-fit: cover;"
+                             alt="A desk calendar for 2022.">
+                    </button>
+                    <div class="card-body">
+                        <p class="card-text text-light">A triangular desk calendar designed for Performance Networks in 2022.</p>
+                    </div>
+                </div>
+                <div class="card" style="width: 30%; min-width:20rem;">
+                    <button class="border-0 p-0">
+                        <img src="images/apse/annual-cover-after.webp" class="card-img-top" style="height:12rem; object-fit: cover;"
+                             alt="Image of a road leading to the future.">
+                    </button>
+                    <div class="card-body">
+                        <p class="card-text text-light">A photo edited for the 2020 Annual Report.</p>
+                    </div>
+                </div>
+                <div class="card" style="width: 30%; min-width:20rem;">
+                    <button class="border-0 p-0">
+                        <img src="images/apse/lib-dem-flyer.webp" class="card-img-top" style="height:12rem; object-fit: cover;"
+                             alt="Flyer for the ALDC Councillor Weekend 2022.">
+                    </button>
+                    <div class="card-body">
+                        <p class="card-text text-light">Flyer for the <abbr title="Association of Liberal Democrat Councillors">ALDC</abbr> Councillor Weekend 2022.</p>
+                    </div>
+                </div>
+                <div class="card" style="width: 30%; min-width:20rem;">
+                    <button class="border-0 p-0">
+                        <img src="images/apse/walton-hall-after.webp" class="card-img-top" style="height:12rem; object-fit: cover;"
+                             alt="Image of Walton Hall.">
+                    </button>
+                    <div class="card-body">
+                        <p class="card-text text-light">A photo edited for the 2019 Northern Forum.</p>
+                    </div>
+                </div>
+                <div class="card" style="width: 30%; min-width:20rem;">
+                    <button class="border-0 p-0">
+                        <img src="images/apse/whats-on.webp" class="card-img-top" style="height:12rem; object-fit: cover;"
+                             alt="Flyer showing upcoming APSE events.">
+                    </button>
+                    <div class="card-body">
+                        <p class="card-text text-light">A flyer showing upcoming APSE events.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+</html>

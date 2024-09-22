@@ -7,7 +7,7 @@ import * as THREE from 'three'
 const textureLoader = new THREE.TextureLoader();
 
 // Scenery
-const sceneryTextures = {
+const sceneryTextures: {[key: string]: THREE.Texture} = {
     grassTxt: textureLoader.load('textures/scenery/Grass.webp'),
     groundTxt: textureLoader.load('textures/scenery/Ground.webp'),
     panoramaTxt: textureLoader.load('textures/scenery/Trees.webp'),
@@ -40,7 +40,7 @@ Object.values(sceneryTextures).forEach(txt => {
 });
 
 // Kaori
-const kaoriTextures = {
+const kaoriTextures : {[key: string]: any} = {
     eyes: {
         open: textureLoader.load('textures/kaori/eyes/Eyes_01.webp'),
         halfOpen: textureLoader.load('textures/kaori/eyes/Eyes_02.webp'),
@@ -70,7 +70,7 @@ Object.values(kaoriTextures).forEach(txt => {
 });
 
 // Ren
-const renTextures = {
+const renTextures: {[key: string]: any} = {
     eyes: {
         open: textureLoader.load('textures/ren/eyes/Eyes_000.webp'),
         halfOpen: textureLoader.load('textures/ren/eyes/Eyes_001.webp'),
@@ -102,7 +102,7 @@ Object.values(renTextures).forEach(txt => {
 /**
  * Materials
  */
-const sceneryMtls = {
+const sceneryMtls: { [key: string]: THREE.Material } = {
     axeMtl: new THREE.MeshPhongMaterial({
         color: 0xe6eff0,
         shininess: 200
@@ -144,7 +144,7 @@ const sceneryMtls = {
 }
 
 // Kaori //
-const kaoriMtls = {
+const kaoriMtls: { [key: string]: THREE.Material } = {
     eyes: new THREE.MeshLambertMaterial({
         map: kaoriTextures.eyes.open
     }),
@@ -164,7 +164,7 @@ const kaoriMtls = {
 }
 
 // Ren //
-const renMtls = {
+const renMtls: { [key: string]: THREE.Material } = {
     eyes: new THREE.MeshLambertMaterial({
         map: renTextures.eyes.open
     }),

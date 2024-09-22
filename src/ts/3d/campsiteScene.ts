@@ -2,34 +2,21 @@
 import * as THREE from 'three'
 // @ts-ignore
 import {FBXLoader} from 'three/examples/jsm/loaders/FBXLoader'
-import GUI from 'lil-gui'
-import gsap from 'gsap'
-import {ScrollToPlugin} from 'gsap/ScrollToPlugin';
 
 // @ts-ignore
-import { throttle } from 'lodash';
+import {throttle} from 'lodash';
 
-gsap.registerPlugin(ScrollToPlugin);
 
 import {sceneryMtls, kaoriMtls, renMtls, sceneryTextures} from "./materials.ts";
+import {transitionToNight} from "./transitionToNight.ts";
 
 export function campsiteScene(): void {
-    /**
-     * GUI
-     */
-    const gui = new GUI();
-    gui.domElement.id = "gui";
-
-
     /**
      * Create Scene
      */
     const scene = new THREE.Scene();
 
     const canvas = document.querySelector('canvas#webgl');
-
-    const daytimeImage = "textures/scenery/Day.webp";
-    const nightTimeImage = "textures/scenery/Night.webp";
 
     /**
      * Load Models
@@ -158,9 +145,21 @@ export function campsiteScene(): void {
     );
 
     // Kaori
+    let kaoriMixer: THREE.AnimationMixer;
+    let kaoriClips: Array<THREE.AnimationClip>;
+    let kaoriActions: any;
     fbxLoader.load(
         'models/kaori.fbx',
         (object: THREE.Group) => {
+            kaoriMixer = new THREE.AnimationMixer(object);
+            kaoriClips = object.animations;
+
+            let danceAnim = THREE.AnimationClip.findByName(kaoriClips, 'Dance');
+
+            kaoriActions = {
+                idle: kaoriMixer.clipAction(THREE.AnimationClip.findByName(kaoriClips, 'Idle')),
+                dance: kaoriMixer.clipAction(THREE.AnimationUtils.subclip(danceAnim, 'Dance', 75, 99)),
+            }
             object.traverse(function (child: THREE.Mesh | any) {
                 if ((child as THREE.Mesh).isMesh) {
                     (child as THREE.Mesh).castShadow = true;
@@ -278,20 +277,6 @@ export function campsiteScene(): void {
         height: window.innerHeight
     }
 
-    window.addEventListener('resize', () => {
-        // Update sizes
-        sizes.width = window.innerWidth;
-        sizes.height = window.innerHeight;
-
-        // Update camera
-        camera.aspect = sizes.width / sizes.height;
-        camera.updateProjectionMatrix();
-
-        // Update renderer
-        renderer.setSize(sizes.width, sizes.height);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    });
-
     /**
      * Camera
      */
@@ -303,20 +288,42 @@ export function campsiteScene(): void {
 
     let cameraRotationY = 0.7;
 
-    const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);
+    const baseFOV = 75;
+    let aspect = sizes.width / sizes.height;
+
+    window.addEventListener('resize', () => {
+        // Update sizes
+        sizes.width = window.innerWidth;
+        sizes.height = window.innerHeight;
+
+        aspect = sizes.width / sizes.height;
+
+        if (aspect > 16 / 9) {
+            camera.fov = baseFOV / (aspect / (16 / 9));
+        } else {
+            camera.fov = baseFOV;
+        }
+
+        // Update camera
+        camera.aspect = aspect;
+        camera.updateProjectionMatrix();
+
+        // Update renderer
+        renderer.setSize(sizes.width, sizes.height);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+
+    });
+
+    const camera = new THREE.PerspectiveCamera(baseFOV, aspect, 0.1, 100);
+    if (aspect > 16 / 9) {
+        camera.fov = baseFOV / (aspect / (16 / 9));
+    } else {
+        camera.fov = baseFOV;
+    }
     camera.position.set(cameraPositions.x, cameraPositions.y, cameraPositions.z);
     camera.rotation.set(0, cameraRotationY, 0);
     scene.add(camera);
-
-    const camFolder = gui.addFolder("Camera");
-    camFolder.add(camera.position, 'x');
-    camFolder.add(camera.position, 'y');
-    camFolder.add(camera.position, 'z');
-    camFolder.add(camera.rotation, 'x');
-    camFolder.add(camera.rotation, 'y');
-    camFolder.add(camera.rotation, 'z');
-
-    gui.close();
 
     /**
      * Renderer
@@ -334,52 +341,10 @@ export function campsiteScene(): void {
     /**
      * Day/Night Switch
      */
-    let isNight = false;
-
+    let isNight: boolean = false;
     let fireLightActive: boolean = false;
 
-    function transitionToNight(isNight: boolean) {
-        // Once the scroll is complete, start light animations
-        gsap.to(ambientLight, {
-            duration: 0.75,
-            intensity: isNight ? 0 : 0.6,
-            ease: "power2.out",
-            overwrite: true
-        });
-        gsap.to(directionalLight, {
-            duration: 0.75,
-            intensity: isNight ? 0 : 7,
-            ease: "power2.out",
-            overwrite: true
-        });
-        gsap.to(fireLight, {
-            duration: isNight ? 2 : 0.2,
-            intensity: isNight ? 1 : 0,
-            delay: isNight ? 2 : 0,
-            ease: "power2.out",
-            overwrite: true,
-            onComplete: () => {
-                fireLightActive = isNight;
-            }
-        });
-        if (fire) {
-            gsap.to(fire.material, {
-                duration: isNight ? 2 : 0.2,
-                opacity: isNight ? 1 : 0,
-                delay: isNight ? 2 : 0,
-                ease: "power2.out",
-                overwrite: true
-            });
-        }
-        gsap.to(canvas, {
-            opacity: 1,
-            duration: 1,
-            ease: 'power2.out',
-            background: `url(${isNight ? nightTimeImage : daytimeImage})`,
-            overwrite: true
-        });
-    }
-
+    // Allow night transition when skills section is visible
     const heroElement = document.querySelector('#hero');
     const skillsElement = document.querySelector('#skills');
 
@@ -399,13 +364,13 @@ export function campsiteScene(): void {
         if (heroMidPoint >= 0 && heroMidPoint <= window.innerHeight) {
             // Hero section is halfway on the screen
             isNight = false;
-            transitionToNight(false);
+            transitionToNight(isNight, ambientLight, directionalLight, fireLight, fireLightActive, fire, canvas);
         }
         // Check if the midpoint of skills is within the viewport
         else if (skillsMidPoint >= 0 && skillsMidPoint <= window.innerHeight) {
             // Skills section is halfway on the screen
             isNight = true;
-            transitionToNight(true);
+            transitionToNight(isNight, ambientLight, directionalLight, fireLight, fireLightActive, fire, canvas);
         }
     };
 
@@ -413,6 +378,14 @@ export function campsiteScene(): void {
     const throttledScroll = throttle(handleScroll, 100);
 
     window.addEventListener('scroll', throttledScroll);
+    // Make sure page loads at top
+    if (history.scrollRestoration) {
+        history.scrollRestoration = 'manual';
+    } else {
+        window.onbeforeunload = function () {
+            window.scrollTo(0, 0);
+        }
+    }
 
     /**
      * Parallax
@@ -441,6 +414,20 @@ export function campsiteScene(): void {
     const clock = new THREE.Clock();
     let previousTime = 0;
     let counter = 0;
+
+    // kaoriAnimation
+    let kaoriModifier = 1;
+
+    const updateKaoriAnimation = () => {
+            kaoriModifier = 0.6;
+            kaoriActions.dance.setEffectiveWeight(0);
+            kaoriActions.idle.setEffectiveWeight(1);
+
+            kaoriActions.dance.enabled = false;
+            kaoriActions.idle.enabled = true;
+
+            kaoriActions.idle.play();
+    }
 
     // Ren Animation
     let renShoot = false;
@@ -502,7 +489,6 @@ export function campsiteScene(): void {
     const navBurger: HTMLButtonElement | null = document.querySelector('button.navbar-toggler');
 
     const tick = () => {
-        if (isActive) {
             const elapsedTime = clock.getElapsedTime()
             const deltaTime = elapsedTime - previousTime;
             previousTime = elapsedTime;
@@ -526,9 +512,14 @@ export function campsiteScene(): void {
                 counter = 0;
             }
 
-            if (renMixer && renClips) {
-                renMixer.update(deltaTime * renModifier);
+            if (kaoriMixer && kaoriClips) {
+                updateKaoriAnimation();
+                kaoriMixer.update(deltaTime * kaoriModifier);
+            }
+
+            if (renMixer && renClips && renActions) {
                 updateRenAnimation();
+                renMixer.update(deltaTime * renModifier);
             }
 
             // Animate camera
@@ -548,6 +539,8 @@ export function campsiteScene(): void {
                 cameraRotationY = 0.9;
             }
 
+            // Parallax
+        if (isActive) {
             // Calculate target positions based on mouse movement
             targetCameraX = cameraPositions.x - cursor.x * movementSensitivity;
             targetCameraY = cameraPositions.y + cursor.y * movementSensitivity;
@@ -562,10 +555,9 @@ export function campsiteScene(): void {
             camera.position.z = cameraPositions.z;
 
             camera.rotation.y += (targetRotationCameraY - camera.rotation.y) * lerpFactor * deltaTime * 60;
-
+        }
             // Render
             renderer.render(scene, camera);
-        }
         // Call tick again on the next frame
         window.requestAnimationFrame(tick);
     }

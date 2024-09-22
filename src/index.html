@@ -24,7 +24,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
                 <div class="offcanvas-body d-flex flex-column p-0">
-                    <ul class="navbar-nav d-flex flex-column h-100 justify-content-center text-center text-lg-start ps-0 ps-lg-5">
+                    <ul class="navbar-nav d-flex flex-column h-100 justify-content-center text-center text-lg-start ps-lg-5">
                         <li class="nav-item display-4 mb-2 fw-normal">
                             <a class="nav-link active" aria-current="page" href="#hero">Home</a>
                         </li>
@@ -55,9 +55,9 @@
     <section id="hero" class="vh-100">
         <div class="container-fluid h-100">
             <div class="row align-items-start align-items-lg-center h-100">
-                <div class="d-flex flex-column justify-content-center col-12 col-lg-5 text-center text-lg-start glass ps-0 ps-lg-5 h-100 transitional-elem">
+                <div class="d-flex flex-column justify-content-center col-12 col-lg-5 text-center text-lg-start glass ps-lg-5 h-100 transitional-elem">
                     <h1 class="display-1 ms-0 ms-lg-3">Hi, I'm Robin</h1>
-                    <p class="lead mb-3 mb-lg-3 ms-0 ms-lg-3">UK-Based Digital Media Developer</p>
+                    <p class="lead mb-3 ms-0 ms-lg-3">UK-Based Digital Media Developer</p>
                     <button type="button"
                             class="btn btn-lg ms-0 ms-lg-3 btn-outline-primary align-self-lg-start align-self-center">
                         Get In Touch!
@@ -69,51 +69,18 @@
     <section id="skills" class="vh-100">
         <div class="container-fluid h-100">
             <div class="row h-100">
-                <div class="text-center text-lg-start col-12 col-lg-5 glass h-100 d-flex flex-column justify-content-center ps-0 ps-lg-5 transitional-elem">
-                    <h2 class="display-1">Skills</h2>
-                    <ul class="skills-list d-flex flex-wrap list-unstyled justify-content-center">
-                        <li class="m-2">
-                            <button class="html5" type="button" aria-selected="false"><i
-                                    class="fa-brands fa-html5 display-4"></i></button>
-                        </li>
-                        <li class="m-2">
-                            <button class="css3" aria-selected="false"><i class="fa-brands fa-css3-alt display-4"></i>
-                            </button>
-                        </li>
-                        <li class="m-2">
-                            <button class="js" type="button" aria-selected="false"><i
-                                    class="fa-brands fa-js display-4"></i></button>
-                        </li>
-                        <li class="m-2">
-                            <button class="bootstrap" type="button" aria-selected="false"><i
-                                    class="fa-brands fa-bootstrap display-4"></i></button>
-                        </li>
-                        <li class="m-2">
-                            <button class="p5js" type="button" aria-selected="false"><i
-                                    class="fa-solid fa-star-of-life display-4 fw-semibold"></i></button>
-                        </li>
-                        <li class="m-2">
-                            <button class="unity" type="button" aria-selected="false"><i
-                                    class="fa-brands fa-unity display-4"></i></button>
-                        </li>
-                        <li class="m-2">
-                            <button class="threejs" type="button" aria-selected="false"><img src="/icons/threejs.svg"
-                                                                                             alt="Three.js logo">
-                            </button>
-                        </li>
-                        <li class="m-2">
-                            <button class="maya" type="button" aria-selected="false"><img src="/icons/maya.svg"
-                                                                                          alt="Autodesk Maya logo">
-                            </button>
-                        </li>
+                <div class="text-center text-lg-start col-12 col-lg-5 glass h-100 d-flex flex-column justify-content-center ps-lg-5 transitional-elem">
+                    <h2 class="display-2 ms-lg-3 mb-3">About Me</h2>
+                    <p class="ms-lg-3">I'm a second-year Digital Media student at UWE currently searching for placement opportunities.</p>
+                    <p class="ms-lg-3">Some of my interests include:</p>
+                    <ul class="ms-lg-3">
+                        <li>Creating Interactive Experiences</li>
+                        <li>Creative Coding</li>
+                        <li>3D Modelling</li>
+                        <li>Frontend Web Development</li>
+                        <li>Graphic Design</li>
                     </ul>
-                    <ul class="d-flex flex-column list-unstyled align-items-center">
-                        <li class="mb-2 lead"><span class="fw-semibold size">Experience:</span> 5 Years</li>
-                        <li class="mb-2  lead"><span class="fw-semibold">Confidence Level:</span> Intermediate</li>
-                        <li class="mb-2">
-                            <button type="button" class="btn btn-lg btn-outline-secondary">View HTML Projects</button>
-                        </li>
-                    </ul>
+                    <a href="#projects" class="btn btn-outline-primary ms-lg-3 mt-3 align-self-lg-start btn-lg">View my Projects</a>
                 </div>
             </div>
         </div>
@@ -121,92 +88,117 @@
     <section id="projects" class="bg-light">
         <div class="container p-5 text-center">
             <h2 class="display-1 text-dark">Projects</h2>
-            <div class="input-group mb-3 d-flex w-100 justify-content-md-evenly my-4 flex-row flex-md-wrap flex-nowrap overflow-auto px-5">
+            <div id="project-filters" class="input-group mb-3 d-flex w-100 justify-content-md-evenly my-4 px-5 flex-md-row flex-column">
                 <div class="filter-box d-flex align-items-center mb-3 mx-3 threed">
                     <input type="checkbox" value="3D" aria-label="3D" id="3D">
-                    <label class="form-check-label px-4 py-2 lead rounded-pill" for="3D">3D</label>
+                    <label class="form-check-label px-4 py-2 rounded-pill" for="3D">3D</label>
+                </div>
+
+                <div class="filter-box d-flex align-items-center mb-3 mx-3 creative-coding">
+                    <input type="checkbox" value="Creative-Coding" aria-label="Creative-Coding" id="Creative-Coding">
+                    <label class="form-check-label px-4 py-2 rounded-pill" for="Creative-Coding">Creative Coding</label>
                 </div>
 
                 <div class="filter-box d-flex align-items-center mb-3 mx-3 graphic-design">
                     <input type="checkbox" value="Graphic-Design" aria-label="Graphic-Design" id="Graphic-Design">
-                    <label class="form-check-label px-4 py-2 lead rounded-pill" for="Graphic-Design">Graphic Design</label>
+                    <label class="form-check-label px-4 py-2 rounded-pill" for="Graphic-Design">Graphic Design</label>
                 </div>
 
                 <div class="filter-box d-flex align-items-center mb-3 mx-3 interactive">
                     <input type="checkbox" value="Interactive" aria-label="Interactive" id="Interactive">
-                    <label class="form-check-label px-4 py-2 lead rounded-pill" for="Interactive">Interactive</label>
-                </div>
-
-                <div class="filter-box d-flex align-items-center mb-3 mx-3 p5js">
-                    <input type="checkbox" value="P5.js" aria-label="P5.js" id="P5.js">
-                    <label class="form-check-label px-4 py-2 lead rounded-pill" for="P5.js">P5.js</label>
+                    <label class="form-check-label px-4 py-2 rounded-pill" for="Interactive">Interactive</label>
                 </div>
 
                 <div class="filter-box d-flex align-items-center mb-3 mx-3 unity">
                     <input type="checkbox" value="Unity" aria-label="Unity" id="Unity">
-                    <label class="form-check-label px-4 py-2 lead rounded-pill" for="Unity">Unity</label>
+                    <label class="form-check-label px-4 py-2 rounded-pill" for="Unity">Unity</label>
                 </div>
 
                 <div class="filter-box d-flex align-items-center mb-3 mx-3 web-dev">
                     <input type="checkbox" value="Web-Development" aria-label="Web-Development" id="Web-Development">
-                    <label class="form-check-label px-4 py-2 lead rounded-pill" for="Web-Development">Web Development</label>
+                    <label class="form-check-label px-4 py-2 rounded-pill" for="Web-Development">Web Development</label>
                 </div>
             </div>
 
             <div id="projects-grid">
-                <div class="card" style="width: 18rem;" data-tags="unity,3d,interactive">
+                <div class="card" style="width: 18rem;" data-tags="Unity,3D,Interactive">
                     <img src="images/pirate-game.webp" class="card-img-top" alt="Screenshot of a pirate in a tavern.">
                     <div class="card-body">
-                        <h5 class="card-title">Pirates</h5>
+                        <h5 class="card-title text-light">Pirates</h5>
                         <h6 class="mb-2 badge rounded-pill threed">3D</h6>
                         <h6 class="mb-2 badge rounded-pill interactive">Interactive</h6>
                         <h6 class="mb-2 badge rounded-pill unity">Unity</h6>
-                        <p class="card-text">Dock at an unknown island and explore a highly interactive 3d environment.</p>
+                        <p class="card-text text-light">Dock at an unknown island and explore a highly interactive 3d environment.</p>
                         <a href="https://mega.nz/file/EZAyFLhQ#HzaYjnzRyxu8OVpTgaKXJYWYB8DIxXTl8T07g67C7z4" class="btn btn-primary my-2" target="_blank"><i class="fa-brands fa-windows me-2"></i>Download .7z</a>
                         <a href="https://github.com/robeecodes/Pirates" class="btn btn-primary my-2" target="_blank"><i class="fa-brands fa-github me-2"></i>View Repository</a>
                     </div>
                 </div>
-                <div class="card" style="width: 18rem;">
+                <div class="card" style="width: 18rem;" data-tags="Interactive,Creative-Coding">
                     <img src="images/metal-mansion.webp" class="card-img-top" alt="Screenshot of the Metal Mansion game">
                     <div class="card-body">
-                        <h5 class="card-title">Metal Mansion</h5>
+                        <h5 class="card-title text-light">Metal Mansion</h5>
+                        <h6 class="mb-2 badge rounded-pill creative-coding">Creative Coding</h6>
                         <h6 class="mb-2 badge rounded-pill interactive">Interactive</h6>
-                        <h6 class="mb-2 badge rounded-pill p5js">P5.js</h6>
-                        <p class="card-text">A run-and-gun platformer inspired by classics like Mega Man. Choose between two characters with unique abilities and destroy the robot threat.</p>
+                        <p class="card-text text-light">A run-and-gun platformer inspired by classics like Mega Man. Choose between two characters with unique abilities and destroy the robot threat.</p>
                         <a href="https://robeecodes.github.io/metal-mansion/" class="btn btn-primary my-2" target="_blank"><i class="fa-solid fa-star-of-life me-2" ></i>Play Online</a>
                         <a href="https://github.com/robeecodes/metal-mansion" class="btn btn-primary my-2" target="_blank"><i class="fa-brands fa-github me-2"></i>View Repository</a>
                     </div>
                 </div>
-                <div class="card" style="width: 18rem;">
+                <div class="card" style="width: 18rem;" data-tags="Graphic-Design,Interactive,Web-Development">
                     <img src="images/gwds.webp" class="card-img-top" alt="Screenshot of my Graphic and Web Design Studio Portfolio">
                     <div class="card-body">
-                        <h5 class="card-title">Graphic and Web Design Studio</h5>
+                        <h5 class="card-title text-light">Graphic and Web Design Studio</h5>
                         <h6 class="mb-2 badge rounded-pill graphic-design">Graphic Design</h6>
                         <h6 class="mb-2 badge rounded-pill interactive">Interactive</h6>
                         <h6 class="mb-2 badge rounded-pill web-dev">Web Development</h6>
-                        <p class="card-text">A portfolio of design pieces relating to the web, poster design and typography.</p>
+                        <p class="card-text text-light">A portfolio of design pieces relating to the web, poster design and typography.</p>
                         <a href="https://robeecodes.github.io/gwds-website/" class="btn btn-primary my-2" target="_blank"><i class="fa-solid fa-link me-2"></i>View Online</a>
                         <a href="https://github.com/robeecodes/gwds-website" class="btn btn-primary my-2" target="_blank"><i class="fa-brands fa-github me-2"></i>View Repository</a>
                     </div>
                 </div>
-                <div class="card" style="width: 18rem;">
-                    <img src="..." class="card-img-top" alt="...">
+                <div class="card" style="width: 18rem;" data-tags="Graphic-Design,Interactive,Web-Development">
+                    <img src="images/create-against-hate.webp" class="card-img-top" alt="Screenshot of my 'Create Against Hate' Website">
                     <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <h6 class="mb-2 badge rounded-pill bg-danger">Card subtitle</h6>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                        <h5 class="card-title text-light">Create Against Hate</h5>
+                        <h6 class="mb-2 badge rounded-pill graphic-design">Graphic Design</h6>
+                        <h6 class="mb-2 badge rounded-pill interactive">Interactive</h6>
+                        <h6 class="mb-2 badge rounded-pill web-dev">Web Development</h6>
+                        <p class="card-text text-light">A website concept for a manga-themed charity game jam.</p>
+                        <a href="https://create-against-hate.surge.sh/index.html" class="btn btn-primary my-2" target="_blank"><i class="fa-solid fa-link me-2"></i>View Online</a>
+                        <a href="https://gitlab.uwe.ac.uk/r34-king/create-against-hate" class="btn btn-primary my-2" target="_blank"><i class="fa-brands fa-gitlab me-2"></i>View Repository</a>
                     </div>
                 </div>
-                <div class="card" style="width: 18rem;">
-                    <img src="..." class="card-img-top" alt="...">
+                <div class="card" style="width: 18rem;" data-tags="Graphic-Design,Creative-Coding">
+                    <img src="images/icc.webp" class="card-img-top" alt="Screenshot of my Patchwork Pattern Creative Coding Project">
                     <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <h6 class="mb-2 badge rounded-pill bg-danger">Card subtitle</h6>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                        <h5 class="card-title text-light">P5.js Artwork</h5>
+                        <h6 class="mb-2 badge rounded-pill creative-coding">Creative Coding</h6>
+                        <h6 class="mb-2 badge rounded-pill graphic-design">Graphic Design</h6>
+                        <p class="card-text text-light">A collection of digital art pieces created using P5.js.</p>
+                        <a href="https://robeecodes.github.io/icc-semester-one/" class="btn btn-primary my-2" target="_blank"><i class="fa-solid fa-link me-2"></i>View Online</a>
+                        <a href="https://github.com/robeecodes/icc-semester-one" class="btn btn-primary my-2" target="_blank"><i class="fa-brands fa-github me-2"></i>View Repository</a>
+                    </div>
+                </div>
+                <div class="card" style="width: 18rem;" data-tags="3D,Graphic-Design,Creative-Coding,Interactive,Web-Development">
+                    <img src="images/portfolio-site.webp" class="card-img-top" alt="Screenshot of my Portfolio">
+                    <div class="card-body">
+                        <h5 class="card-title text-light">My Portfolio</h5>
+                        <h6 class="mb-2 badge rounded-pill threed">3D</h6>
+                        <h6 class="mb-2 badge rounded-pill creative-coding">Creative Coding</h6>
+                        <h6 class="mb-2 badge rounded-pill graphic-design">Graphic Design</h6>
+                        <h6 class="mb-2 badge rounded-pill interactive">Interactive</h6>
+                        <h6 class="mb-2 badge rounded-pill web-dev">Web Development</h6>
+                        <p class="card-text text-light">The site you're viewing right now! A website which incorporates 3D design elements.</p>
+                        <a href="https://github.com/robeecodes/icc-semester-one" class="btn btn-primary my-2" target="_blank"><i class="fa-brands fa-github me-2"></i>View Repository</a>
+                    </div>
+                </div>
+                <div class="card" style="width: 18rem;" data-tags="Graphic-Design">
+                    <img src="images/apse/annual-cover-after.webp" class="card-img-top" alt="Image of a road going into the sun.">
+                    <div class="card-body">
+                        <h5 class="card-title text-light">Graphic Design for <abbr title="Association for Public Service Excellence">APSE</abbr></h5>
+                        <h6 class="mb-2 badge rounded-pill graphic-design">Graphic Design</h6>
+                        <p class="card-text text-light">A collection of designs and photo edits I created while employed at APSE.</p>
+                        <a href="./apse-designs.html" class="btn btn-primary my-2" target="_blank"><i class="fa-solid fa-link me-2"></i>View Online</a>
                     </div>
                 </div>
             </div>
