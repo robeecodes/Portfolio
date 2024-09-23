@@ -6,6 +6,8 @@ import {FBXLoader} from 'three/examples/jsm/loaders/FBXLoader'
 // @ts-ignore
 import {throttle} from 'lodash';
 
+import gsap from "gsap";
+
 
 import {sceneryMtls, kaoriMtls, renMtls, sceneryTextures} from "./materials.ts";
 import {transitionToNight} from "./transitionToNight.ts";
@@ -15,12 +17,38 @@ export function campsiteScene(): void {
      * Create Scene
      */
     const scene = new THREE.Scene();
-
     const canvas: HTMLCanvasElement | null = document.querySelector('canvas#webgl');
 
     /**
      * Load Models
      */
+
+    // Show loading screen while THREE loads resources
+    const loadingManager: any = new THREE.LoadingManager();
+    const loadingStatus: HTMLElement | null = document.getElementById('loading-status');
+    const totalItems: number = 20; // I counted :)
+
+    const docHTML: HTMLElement | null = document.querySelector('html');
+    if (docHTML) docHTML.style.overflow = 'hidden';
+    loadingManager.onProgress = function (_: string, itemsLoaded: number, itemsTotal: number) {
+        if (loadingStatus)  loadingStatus.innerHTML = `${Math.round(itemsLoaded/totalItems * 100)}%`;
+        if (itemsLoaded / itemsTotal === 1) { // Using the value from the function as a fallback just in case
+            const loadScreen: HTMLElement | null = document.querySelector('#loading');
+
+            gsap.to (loadScreen, {
+                duration: 1,
+                opacity: 0,
+                onComplete: () => {
+                    loadScreen?.remove();
+                }
+            })
+
+            if (docHTML) docHTML.style.overflow = 'initial';
+        }
+    };
+
+    // Delete the original maya materials
+    // TODO: Is there a better way to do this?
     function disposeMaterial(material: THREE.Material) {
         if (material) {
             if (material.map) material.map.dispose(); // Dispose of textures
@@ -43,7 +71,7 @@ export function campsiteScene(): void {
     let fireLight: THREE.PointLight;
 
 
-    const fbxLoader = new FBXLoader();
+    const fbxLoader = new FBXLoader(loadingManager);
     fbxLoader.load(
         'models/scene.fbx',
         (object: THREE.Group) => {
@@ -419,14 +447,14 @@ export function campsiteScene(): void {
     let kaoriModifier = 1;
 
     const updateKaoriAnimation = () => {
-            kaoriModifier = 0.6;
-            kaoriActions.dance.setEffectiveWeight(0);
-            kaoriActions.idle.setEffectiveWeight(1);
+        kaoriModifier = 0.6;
+        kaoriActions.dance.setEffectiveWeight(0);
+        kaoriActions.idle.setEffectiveWeight(1);
 
-            kaoriActions.dance.enabled = false;
-            kaoriActions.idle.enabled = true;
+        kaoriActions.dance.enabled = false;
+        kaoriActions.idle.enabled = true;
 
-            kaoriActions.idle.play();
+        kaoriActions.idle.play();
     }
 
     // Ren Animation
@@ -489,57 +517,57 @@ export function campsiteScene(): void {
     const navBurger: HTMLButtonElement | null = document.querySelector('button.navbar-toggler');
 
     const tick = () => {
-            const elapsedTime = clock.getElapsedTime()
-            const deltaTime = elapsedTime - previousTime;
-            previousTime = elapsedTime;
-            counter += deltaTime;
+        const elapsedTime = clock.getElapsedTime()
+        const deltaTime = elapsedTime - previousTime;
+        previousTime = elapsedTime;
+        counter += deltaTime;
 
-            // Fire Animation
-            if (counter >= 0.1) {
-                if (fire && isNight) {
-                    if (fire.material.map === sceneryTextures.fireTxts.one) {
-                        fire.material.map = sceneryTextures.fireTxts.two;
-                    } else if (fire.material.map === sceneryTextures.fireTxts.two) {
-                        fire.material.map = sceneryTextures.fireTxts.three;
-                    } else if (fire.material.map === sceneryTextures.fireTxts.three) {
-                        fire.material.map = sceneryTextures.fireTxts.one;
-                    }
-                    fire.material.needsUpdate = true;
+        // Fire Animation
+        if (counter >= 0.1) {
+            if (fire && isNight) {
+                if (fire.material.map === sceneryTextures.fireTxts.one) {
+                    fire.material.map = sceneryTextures.fireTxts.two;
+                } else if (fire.material.map === sceneryTextures.fireTxts.two) {
+                    fire.material.map = sceneryTextures.fireTxts.three;
+                } else if (fire.material.map === sceneryTextures.fireTxts.three) {
+                    fire.material.map = sceneryTextures.fireTxts.one;
                 }
-                if (fireLight && isNight && fireLightActive) {
-                    fireLight.intensity = Math.random() * (1 - 0.5) + 0.5;
-                }
-                counter = 0;
+                fire.material.needsUpdate = true;
             }
-
-            if (kaoriMixer && kaoriClips) {
-                updateKaoriAnimation();
-                kaoriMixer.update(deltaTime * kaoriModifier);
+            if (fireLight && isNight && fireLightActive) {
+                fireLight.intensity = Math.random() * (1 - 0.5) + 0.5;
             }
+            counter = 0;
+        }
 
-            if (renMixer && renClips && renActions) {
-                updateRenAnimation();
-                renMixer.update(deltaTime * renModifier);
+        if (kaoriMixer && kaoriClips) {
+            updateKaoriAnimation();
+            kaoriMixer.update(deltaTime * kaoriModifier);
+        }
+
+        if (renMixer && renClips && renActions) {
+            updateRenAnimation();
+            renMixer.update(deltaTime * renModifier);
+        }
+
+        // Animate camera
+        if (navBurger?.getAttribute('aria-expanded') === 'false') {
+            cameraPositions = {
+                x: 12.1,
+                y: 0.6,
+                z: 6
             }
-
-            // Animate camera
-            if (navBurger?.getAttribute('aria-expanded') === 'false') {
-                cameraPositions = {
-                    x: 12.1,
-                    y: 0.6,
-                    z: 6
-                }
-                cameraRotationY = 0.7;
-            } else {
-                cameraPositions = {
-                    x: 13,
-                    y: 0.6,
-                    z: 4.2
-                }
-                cameraRotationY = 0.9;
+            cameraRotationY = 0.7;
+        } else {
+            cameraPositions = {
+                x: 13,
+                y: 0.6,
+                z: 4.2
             }
+            cameraRotationY = 0.9;
+        }
 
-            // Parallax
+        // Parallax
         if (isActive) {
             // Calculate target positions based on mouse movement
             targetCameraX = cameraPositions.x - cursor.x * movementSensitivity;
@@ -556,8 +584,8 @@ export function campsiteScene(): void {
 
             camera.rotation.y += (targetRotationCameraY - camera.rotation.y) * lerpFactor * deltaTime * 60;
         }
-            // Render
-            renderer.render(scene, camera);
+        // Render
+        renderer.render(scene, camera);
         // Call tick again on the next frame
         window.requestAnimationFrame(tick);
     }

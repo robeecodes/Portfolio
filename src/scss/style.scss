@@ -41,6 +41,21 @@ section {
   --colour: #fff;
 }
 
+#loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #212529;
+  z-index: 9999;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
 #webgl {
   position: fixed;
   top: 0;
@@ -52,13 +67,6 @@ section {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-}
-
-#gui {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 9999;
 }
 
 #offcanvasNavbar {
