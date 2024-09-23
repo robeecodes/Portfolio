@@ -54,6 +54,46 @@ section {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+
+  div p {
+    letter-spacing: .3em;
+  }
+}
+
+#loading-balls {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+
+  .ball-container {
+    position: relative;
+    margin-bottom: 2rem;
+
+    .ball {
+      position: relative;
+      border-radius: 50%;
+      background-color: #fff;
+      width: 2rem;
+      height: 2rem;
+      transform-origin: bottom;
+    }
+
+    .shadow {
+      position: absolute;
+      z-index: -1;
+      content: "";
+      width: 4rem;
+      height: .5rem;
+      background-color: #000;
+      opacity: 0.6;
+      border-radius: .25rem;
+      bottom: -.2em;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+
+
 }
 
 #webgl {
@@ -80,7 +120,7 @@ section {
 // Colours for tags
 .threed {
   --colour: black;
-  }
+}
 
 .graphic-design {
   --colour: ForestGreen;
@@ -108,8 +148,9 @@ section {
     padding: .1em .5em;
     border: .1em solid var(--colour);
     color: var(--colour);
-    white-space:nowrap;
+    white-space: nowrap;
     font-weight: bold;
+
     &:hover {
       cursor: pointer;
       background-color: var(--colour);
@@ -128,6 +169,7 @@ section {
   input[type="checkbox"]:checked + label {
     background-color: var(--colour);
     color: white;
+
     &:hover {
       cursor: pointer;
       background-color: transparent;
@@ -144,9 +186,11 @@ section {
 
 #apse-designs .card button {
   overflow: hidden;
+
   img {
     transition: all .5s;
   }
+
   &:hover {
     img {
       transform: scale(1.2);

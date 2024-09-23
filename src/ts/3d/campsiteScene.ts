@@ -12,7 +12,7 @@ import gsap from "gsap";
 import {sceneryMtls, kaoriMtls, renMtls, sceneryTextures} from "./materials.ts";
 import {transitionToNight} from "./transitionToNight.ts";
 
-export function campsiteScene(): void {
+export function campsiteScene(loadingManager: THREE.LoadingManager): void {
     /**
      * Create Scene
      */
@@ -24,15 +24,13 @@ export function campsiteScene(): void {
      */
 
     // Show loading screen while THREE loads resources
-    const loadingManager: any = new THREE.LoadingManager();
     const loadingStatus: HTMLElement | null = document.getElementById('loading-status');
-    const totalItems: number = 20; // I counted :)
 
     const docHTML: HTMLElement | null = document.querySelector('html');
     if (docHTML) docHTML.style.overflow = 'hidden';
     loadingManager.onProgress = function (_: string, itemsLoaded: number, itemsTotal: number) {
-        if (loadingStatus)  loadingStatus.innerHTML = `${Math.round(itemsLoaded/totalItems * 100)}%`;
-        if (itemsLoaded / itemsTotal === 1) { // Using the value from the function as a fallback just in case
+        if (loadingStatus)  loadingStatus.innerHTML = `${Math.round(itemsLoaded/itemsTotal * 100)}%`;
+        if (itemsLoaded / itemsTotal === 1) {
             const loadScreen: HTMLElement | null = document.querySelector('#loading');
 
             gsap.to (loadScreen, {
