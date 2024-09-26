@@ -13,6 +13,9 @@ import 'img-comparison-slider/dist/index.js'
 import loadingAnimation from "./DOM/loadingAnimation.ts";
 import {loadTextures} from "./3d/materials.ts";
 
+import './form/formSubmission.ts';
+import formSubmission from "./form/formSubmission.ts";
+
 const loadingManager = new THREE.LoadingManager();
 
 /**
@@ -30,3 +33,8 @@ campsiteScene(loadingManager);
  * Loading animation
  */
 loadingAnimation();
+
+/**
+ * Configure form submission
+ */
+formSubmission();

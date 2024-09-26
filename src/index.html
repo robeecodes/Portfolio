@@ -253,8 +253,30 @@
             </div>
         </div>
     </section>
-    <section id="contact">
+    <section id="contact" class="bg-light">
+        <div class="container px-5 text-center">
+            <h2 class="display-1 text-dark">Contact</h2>
+            <form method="POST" id="form">
 
+                <input type="hidden" name="access_key" value=%VITE_FORM_ACCESS_KEY%>
+                <input type="hidden" name="subject" value="New Submission from Web3Forms">
+                <input type="checkbox" name="botcheck" id="" style="display: none;">
+
+                <!-- Custom Form Data -->
+                <input type="email" name="email" required>
+                <input type="text" name="name" required>
+                <input type="text" name="phone" required>
+                <textarea name="message" required></textarea>
+
+                <input type="checkbox" name="privacy-policy" id="privacy-policy" required>
+                <label for="privacy-policy" class="text-dark">By submitting this form, you consent to the <a class="link-info" href="/docs/privacy-policy.pdf" target="_blank">privacy policy</a></label>
+
+                <button type="submit">Submit</button>
+
+                <div id="result"></div>
+
+            </form>
+        </div>
     </section>
 </main>
 <footer class="px-5">
