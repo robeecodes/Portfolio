@@ -161,12 +161,6 @@ export function campsiteScene(loadingManager: THREE.LoadingManager): void {
             });
             object.scale.set(.01, .01, .01);
             scene.add(object);
-        },
-        (xhr: THREE.progress) => {
-            console.log((xhr.loaded / xhr.total) * 100 + '% loaded');
-        },
-        (error: THREE.error) => {
-            console.log(error);
         }
     );
 
@@ -215,12 +209,6 @@ export function campsiteScene(loadingManager: THREE.LoadingManager): void {
             })
             object.scale.set(.01, .01, .01);
             scene.add(object);
-        },
-        (xhr: THREE.progress) => {
-            console.log((xhr.loaded / xhr.total) * 100 + '% loaded');
-        },
-        (error: THREE.error) => {
-            console.log(error);
         }
     );
 
@@ -279,12 +267,6 @@ export function campsiteScene(loadingManager: THREE.LoadingManager): void {
             })
             object.scale.set(.01, .01, .01);
             scene.add(object);
-        },
-        (xhr: THREE.progress) => {
-            console.log((xhr.loaded / xhr.total) * 100 + '% loaded');
-        },
-        (error: THREE.error) => {
-            console.log(error);
         }
     );
 

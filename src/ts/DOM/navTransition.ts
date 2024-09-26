@@ -76,7 +76,6 @@ const observer = new IntersectionObserver(observerCallback, observerOptions);
 function observerCallback(entries: any, _observer: any) {
     entries.forEach((entry: any) => {
         if(entry.isIntersecting) {
-            console.log(entry);
             if (entry.target.id === 'hero') updateLink(navLinks[0]);
             if (entry.target.id === 'skills') updateLink(navLinks[1]);
             if (entry.target.id === 'projects') updateLink(navLinks[2]);
