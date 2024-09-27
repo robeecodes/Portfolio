@@ -25,10 +25,10 @@ $primary: #f8f9fa;
 
 html {
   height: 100vh;
-  scroll-snap-type: y mandatory;
+  scroll-snap-type: y proximity;
 }
 
-section {
+section, footer {
   scroll-snap-align: start;
   scroll-snap-stop: always;
 }
@@ -113,7 +113,7 @@ section {
   width: 40vw;
 }
 
-section {
+section, footer {
   position: relative;
 }
 

@@ -73,21 +73,21 @@
     </nav>
 </header>
 <main>
-    <section id="hero" class="vh-100">
+    <section id="hero" class="mandatory vh-100">
         <div class="container-fluid h-100">
             <div class="row align-items-start align-items-lg-center h-100">
                 <div class="d-flex flex-column justify-content-center col-12 col-lg-5 text-center text-lg-start glass ps-lg-5 h-100 transitional-elem">
                     <h1 class="display-1 ms-0 ms-lg-3">Hi, I'm Robin</h1>
                     <p class="lead mb-3 ms-0 ms-lg-3">UK-Based Digital Media Developer</p>
-                    <button type="button"
+                    <a href="#contact"
                             class="btn btn-lg ms-0 ms-lg-3 btn-outline-primary align-self-lg-start align-self-center">
                         Get In Touch!
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>
     </section>
-    <section id="skills" class="vh-100">
+    <section id="skills" class="mandatory vh-100">
         <div class="container-fluid h-100">
             <div class="row h-100">
                 <div class="text-center text-lg-start col-12 col-lg-5 glass h-100 d-flex flex-column justify-content-center ps-lg-5 transitional-elem">
@@ -253,34 +253,79 @@
             </div>
         </div>
     </section>
-    <section id="contact" class="bg-light">
-        <div class="container px-5 text-center">
-            <h2 class="display-1 text-dark">Contact</h2>
-            <form method="POST" id="form">
+    <section id="contact" class="bg-light pb-5">
+        <div class="container text-dark">
+            <div class="row justify-content-lg-center">
+                <div class="col-12 col-lg-9">
+                    <div class="bg-white border rounded shadow-sm overflow-hidden px-2">
+                        <h2 class="display-1 text-dark text-center pt-5">Contact</h2>
+                        <form method="POST" id="form">
 
-                <input type="hidden" name="access_key" value=%VITE_FORM_ACCESS_KEY%>
-                <input type="hidden" name="subject" value="New Submission from Web3Forms">
-                <input type="checkbox" name="botcheck" id="" style="display: none;">
+                            <input type="hidden" name="access_key" value=%VITE_FORM_ACCESS_KEY%>
+                            <input type="hidden" name="subject" value="New Submission from Web3Forms">
+                            <input type="checkbox" name="botcheck" id="" style="display: none;">
 
-                <!-- Custom Form Data -->
-                <input type="email" name="email" required>
-                <input type="text" name="name" required>
-                <input type="text" name="phone" required>
-                <textarea name="message" required></textarea>
-
-                <input type="checkbox" name="privacy-policy" id="privacy-policy" required>
-                <label for="privacy-policy" class="text-dark">By submitting this form, you consent to the <a class="link-info" href="/docs/privacy-policy.pdf" target="_blank">privacy policy</a></label>
-
-                <button type="submit">Submit</button>
-
-                <div id="result"></div>
-
-            </form>
+                            <div class="row gy-4 gy-xl-5 p-4 p-xl-5">
+                                <div class="col-12 col-md-6">
+                                    <label for="fullname" class="form-label">Full Name <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control bg-light text-dark" id="fullname"
+                                           name="fullname" value=""
+                                           required>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <label for="email" class="form-label">Email <span
+                                            class="text-danger">*</span></label>
+                                    <div class="input-group">
+                  <span class="input-group-text bg-light text-dark">
+                    <i class="fa-regular fa-envelope"></i>
+                  </span>
+                                        <input type="email" class="form-control bg-light text-dark" id="email"
+                                               name="email" value=""
+                                               required>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <label for="message" class="form-label">Message <span
+                                            class="text-danger">*</span></label>
+                                    <textarea class="form-control bg-light text-dark" id="message" name="message"
+                                              rows="3"
+                                              required></textarea>
+                                </div>
+                                <div class="col-12">
+                                    <div class="d-flex">
+                                        <input type="checkbox" name="privacy-policy" id="privacy-policy" class="me-2" required>
+                                        <label for="privacy-policy" class="form-label">By submitting this form, you
+                                            consent to the
+                                            <a href="/docs/privacy-policy.pdf" class="link-info" target="_blank">Privacy
+                                                Policy</a>.<span
+                                                    class="text-danger">*</span></label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn btn-outline-secondary btn-lg w-100" type="submit">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div id="result" class="p-2 text-center mx-auto lead"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 </main>
-<footer class="px-5">
-
+<footer class="p-5 bg-light border-top">
+    <div class="container d-flex flex-md-row flex-column justify-content-evenly align-items-center">
+        <p class="text-dark lead text-center text-md-start">&copy; Robin King 2024</p>
+        <ul class="socials d-flex list-unstyled py-3 justify-content-center text-dark mb-3 mb-md-0">
+            <li><a href="https://www.linkedin.com/in/robin-kingy" target="_blank"
+                   title="Robin King LinkedIn"><i class="fa-brands fa-linkedin me-2 text-dark display-6"></i></a></li>
+            <li><a href="https://github.com/robeecodes" target="_blank" title="Robin King Github"><i
+                    class="fa-brands fa-github mx-2 text-dark display-6"></i></a></li>
+            <li><a href="mailto:robin.code22@gmail.com" target="_blank" title="Robin King Email"><i
+                    class="fa-solid fa-envelope mx-2 text-dark display-6"></i></a></li>
+        </ul>
+    </div>
 </footer>
 </body>
 </html>

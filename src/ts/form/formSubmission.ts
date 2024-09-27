@@ -2,6 +2,10 @@ export default function formSubmission(): void {
     const form: HTMLFormElement = document.getElementById('form') as HTMLFormElement;
     const result: HTMLElement | null = document.getElementById('result');
 
+    window.addEventListener('load', () => {
+        form.reset();
+    })
+
     form?.addEventListener('submit', function(e) {
         e.preventDefault();
         const formData = new FormData(form);
@@ -20,7 +24,10 @@ export default function formSubmission(): void {
             .then(async (response) => {
                 let json = await response.json();
                 if (response.status == 200) {
-                    if (result) result.innerHTML = json.message;
+                    if (result) {
+                        result.innerHTML = json.message;
+                        form.reset();
+                    }
                 } else {
                     if (result) result.innerHTML = json.message;
                 }
