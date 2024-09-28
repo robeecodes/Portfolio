@@ -23,17 +23,17 @@ export function campsiteScene(loadingManager: THREE.LoadingManager): void {
      * Load Models
      */
 
-    // Show loading screen while THREE loads resources
+        // Show loading screen while THREE loads resources
     const loadingStatus: HTMLElement | null = document.getElementById('loading-status');
 
     const docHTML: HTMLElement | null = document.querySelector('html');
     if (docHTML) docHTML.style.overflow = 'hidden';
     loadingManager.onProgress = function (_: string, itemsLoaded: number, itemsTotal: number) {
-        if (loadingStatus)  loadingStatus.innerHTML = `${Math.round(itemsLoaded/itemsTotal * 100)}%`;
+        if (loadingStatus) loadingStatus.innerHTML = `${Math.round(itemsLoaded / itemsTotal * 100)}%`;
         if (itemsLoaded / itemsTotal === 1) {
             const loadScreen: HTMLElement | null = document.querySelector('#loading');
 
-            gsap.to (loadScreen, {
+            gsap.to(loadScreen, {
                 duration: 1,
                 opacity: 0,
                 onComplete: () => {
@@ -372,13 +372,17 @@ export function campsiteScene(loadingManager: THREE.LoadingManager): void {
         if (heroMidPoint >= 0 && heroMidPoint <= window.innerHeight) {
             // Hero section is halfway on the screen
             isNight = false;
-            transitionToNight(isNight, ambientLight, directionalLight, fireLight, fireLightActive, fire, canvas);
+            transitionToNight(isNight, ambientLight, directionalLight, fireLight, fire, canvas, () => {
+                fireLightActive = isNight;
+            });
         }
         // Check if the midpoint of skills is within the viewport
         else if (skillsMidPoint >= 0 && skillsMidPoint <= window.innerHeight) {
             // Skills section is halfway on the screen
             isNight = true;
-            transitionToNight(isNight, ambientLight, directionalLight, fireLight, fireLightActive, fire, canvas);
+            transitionToNight(isNight, ambientLight, directionalLight, fireLight, fire, canvas, () => {
+                fireLightActive = isNight;
+            });
         }
     };
 

@@ -2,7 +2,7 @@ import gsap from "gsap";
 // @ts-ignore
 import * as THREE from 'three'
 
-export const transitionToNight = (isNight: boolean, ambientLight: THREE.AmbientLight, directionalLight: THREE.DirectionalLight, fireLight: THREE.PointLight, _fireLightActive: boolean, fire: THREE.Mesh, canvas: THREE.Canvas) => {
+export const transitionToNight = (isNight: boolean, ambientLight: THREE.AmbientLight, directionalLight: THREE.DirectionalLight, fireLight: THREE.PointLight, fire: THREE.Mesh, canvas: THREE.Canvas, callback: Function) => {
     const daytimeImage = "textures/scenery/Day.webp";
     const nightTimeImage = "textures/scenery/Night.webp";
 
@@ -26,7 +26,7 @@ export const transitionToNight = (isNight: boolean, ambientLight: THREE.AmbientL
             ease: "power2.out",
             overwrite: true,
             onComplete: () => {
-                _fireLightActive = isNight;
+                callback();
             }
         });
         if (fire) {
