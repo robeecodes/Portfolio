@@ -6,10 +6,7 @@ import {FBXLoader} from 'three/examples/jsm/loaders/FBXLoader'
 // @ts-ignore
 import {throttle} from 'lodash';
 
-import gsap from "gsap";
-
-
-import {sceneryMtls, kaoriMtls, renMtls, sceneryTextures} from "./materials.ts";
+import {sceneryMtls, kaoriMtls, renMtls, sceneryTextures, kaoriTextures} from "./materials.ts";
 import {transitionToNight} from "./transitionToNight.ts";
 
 export function campsiteScene(loadingManager: THREE.LoadingManager): void {
@@ -22,28 +19,6 @@ export function campsiteScene(loadingManager: THREE.LoadingManager): void {
     /**
      * Load Models
      */
-
-        // Show loading screen while THREE loads resources
-    const loadingStatus: HTMLElement | null = document.getElementById('loading-status');
-
-    const docHTML: HTMLElement | null = document.querySelector('html');
-    if (docHTML) docHTML.style.overflow = 'hidden';
-    loadingManager.onProgress = function (_: string, itemsLoaded: number, itemsTotal: number) {
-        if (loadingStatus) loadingStatus.innerHTML = `${Math.round(itemsLoaded / itemsTotal * 100)}%`;
-        if (itemsLoaded / itemsTotal === 1) {
-            const loadScreen: HTMLElement | null = document.querySelector('#loading');
-
-            gsap.to(loadScreen, {
-                duration: 1,
-                opacity: 0,
-                onComplete: () => {
-                    loadScreen?.remove();
-                }
-            })
-
-            if (docHTML) docHTML.style.overflow = 'initial';
-        }
-    };
 
     // Delete the original maya materials
     // TODO: Is there a better way to do this?
@@ -168,6 +143,7 @@ export function campsiteScene(loadingManager: THREE.LoadingManager): void {
     let kaoriMixer: THREE.AnimationMixer;
     let kaoriClips: Array<THREE.AnimationClip>;
     let kaoriActions: any;
+    let kaori: any;
     fbxLoader.load(
         'models/kaori.fbx',
         (object: THREE.Group) => {
@@ -208,6 +184,7 @@ export function campsiteScene(loadingManager: THREE.LoadingManager): void {
                 }
             })
             object.scale.set(.01, .01, .01);
+            kaori = object;
             scene.add(object);
         }
     );
@@ -431,7 +408,7 @@ export function campsiteScene(loadingManager: THREE.LoadingManager): void {
     let kaoriModifier = 1;
 
     const updateKaoriAnimation = () => {
-        kaoriModifier = 0.6;
+        kaoriModifier = 0.5;
         kaoriActions.dance.setEffectiveWeight(0);
         kaoriActions.idle.setEffectiveWeight(1);
 
@@ -500,14 +477,34 @@ export function campsiteScene(loadingManager: THREE.LoadingManager): void {
 
     const navBurger: HTMLButtonElement | null = document.querySelector('button.navbar-toggler');
 
+    const kaoriBlink = [kaoriTextures.eyes.open, kaoriTextures.eyes.halfOpen, kaoriTextures.eyes.closed];
+    let kaoriBlinkIdx = 0;
+    let kaoriIsBlinking = false;
+
     const tick = () => {
         const elapsedTime = clock.getElapsedTime()
         const deltaTime = elapsedTime - previousTime;
         previousTime = elapsedTime;
+
+        // The counter is used to throttle animation speed (1 frame per ms, essentially)
         counter += deltaTime;
 
-        // Fire Animation
+        // Make Kaori blink randomly
+        if (kaori) {
+            if (!kaoriIsBlinking) {
+                if (Math.random() > 0.99) kaoriIsBlinking = true;
+            }
+        }
+
         if (counter >= 0.1) {
+            if (kaoriIsBlinking) {
+                kaoriBlinkIdx++;
+                kaoriMtls.eyes.map = kaoriBlink[kaoriBlinkIdx % 3];
+                kaoriMtls.eyes.needsUpdate = true;
+
+                if (kaoriBlinkIdx % 3 === 0) kaoriIsBlinking = false;
+            }
+            // Fire Animation
             if (fire && isNight) {
                 if (fire.material.map === sceneryTextures.fireTxts.one) {
                     fire.material.map = sceneryTextures.fireTxts.two;

@@ -1,7 +1,9 @@
 // @ts-ignore
 import * as THREE from 'three'
 
-const sceneryMtls: { [key: string]: THREE.Material } = {}, kaoriMtls: { [key: string]: THREE.Material } = {}, renMtls: { [key: string]: THREE.Material } = {}, sceneryTextures: { [key: string]: THREE.Material } = {};
+const sceneryMtls: { [key: string]: THREE.Material } = {}, kaoriMtls: { [key: string]: THREE.Material } = {},
+    renMtls: { [key: string]: THREE.Material } = {}, sceneryTextures: { [key: string]: THREE.Material } = {},
+    kaoriTextures: { [key: string]: THREE.Material } = {};
 
 export function loadTextures(loadingManager: THREE.LoadingManager) {
     /**
@@ -43,7 +45,7 @@ export function loadTextures(loadingManager: THREE.LoadingManager) {
     });
 
 // Kaori
-    const kaoriTextures : {[key: string]: any} = {
+    Object.assign(kaoriTextures, {
         eyes: {
             open: textureLoader.load('textures/kaori/eyes/Eyes_01.webp'),
             halfOpen: textureLoader.load('textures/kaori/eyes/Eyes_02.webp'),
@@ -55,7 +57,7 @@ export function loadTextures(loadingManager: THREE.LoadingManager) {
             open: textureLoader.load('textures/kaori/mouths/Mouth_03.webp'),
         },
         uvMap: textureLoader.load('textures/kaori/UV Map.webp')
-    }
+    });
 
     Object.values(kaoriTextures).forEach(txt => {
         if (typeof txt === 'object' && !txt.isTexture) {
@@ -64,8 +66,7 @@ export function loadTextures(loadingManager: THREE.LoadingManager) {
                 t.minFilter = THREE.NearestFilter;
                 t.magFilter = THREE.NearestFilter;
             });
-        }
-        else {
+        } else {
             txt.colorSpace = THREE.SRGBColorSpace;
             txt.minFilter = THREE.NearestFilter;
             txt.magFilter = THREE.NearestFilter;
@@ -73,7 +74,7 @@ export function loadTextures(loadingManager: THREE.LoadingManager) {
     });
 
 // Ren
-    const renTextures: {[key: string]: any} = {
+    const renTextures: { [key: string]: any } = {
         eyes: {
             open: textureLoader.load('textures/ren/eyes/Eyes_000.webp'),
             halfOpen: textureLoader.load('textures/ren/eyes/Eyes_001.webp'),
@@ -94,8 +95,7 @@ export function loadTextures(loadingManager: THREE.LoadingManager) {
                 t.minFilter = THREE.NearestFilter;
                 t.magFilter = THREE.NearestFilter;
             });
-        }
-        else {
+        } else {
             txt.colorSpace = THREE.SRGBColorSpace;
             txt.minFilter = THREE.NearestFilter;
             txt.magFilter = THREE.NearestFilter;
@@ -151,7 +151,7 @@ export function loadTextures(loadingManager: THREE.LoadingManager) {
         eyes: new THREE.MeshLambertMaterial({
             map: kaoriTextures.eyes.open
         }),
-        mouth:  new THREE.MeshLambertMaterial({
+        mouth: new THREE.MeshLambertMaterial({
             map: kaoriTextures.mouths.smile
         }),
         skinCloth: new THREE.MeshLambertMaterial({
@@ -171,7 +171,7 @@ export function loadTextures(loadingManager: THREE.LoadingManager) {
         eyes: new THREE.MeshLambertMaterial({
             map: renTextures.eyes.open
         }),
-        mouth:  new THREE.MeshLambertMaterial({
+        mouth: new THREE.MeshLambertMaterial({
             map: renTextures.mouths.smile,
         }),
         skinCloth: new THREE.MeshLambertMaterial({
@@ -186,4 +186,4 @@ export function loadTextures(loadingManager: THREE.LoadingManager) {
     });
 }
 
-export {sceneryMtls, kaoriMtls, renMtls, sceneryTextures}
+export {sceneryMtls, kaoriMtls, renMtls, sceneryTextures, kaoriTextures}

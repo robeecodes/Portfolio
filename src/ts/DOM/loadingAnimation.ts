@@ -52,17 +52,20 @@ export default function loadingAnimation(): void {
         tl.to(shadow, {
             scaleX: 1,
             duration: .3,
+            opacity: 1
         });
 
         // Shadow shrinks as the ball goes up
         tl.to(shadow, {
             scaleX: 0.5,
             duration: 1.6,
+            opacity: 0.2
         });
 
         tl.to(shadow, {
             scaleX: 1,
             duration: .6,
+            opacity: 1
         }, "-=0.1");
     });
 }

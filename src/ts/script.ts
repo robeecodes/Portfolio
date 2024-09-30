@@ -15,8 +15,14 @@ import {loadTextures} from "./3d/materials.ts";
 
 import './form/formSubmission.ts';
 import formSubmission from "./form/formSubmission.ts";
+import loadingScreen from "./DOM/loadingScreen.ts";
 
 const loadingManager = new THREE.LoadingManager();
+
+/**
+ * Show loading screen
+ */
+loadingScreen(loadingManager);
 
 /**
  * Load textures
