@@ -1,9 +1,12 @@
 // @ts-ignore
 import * as THREE from 'three'
 
-const sceneryMtls: { [key: string]: THREE.Material } = {}, kaoriMtls: { [key: string]: THREE.Material } = {},
-    renMtls: { [key: string]: THREE.Material } = {}, sceneryTextures: { [key: string]: THREE.Material } = {},
-    kaoriTextures: { [key: string]: THREE.Material } = {};
+const sceneryMtls: { [key: string]: THREE.Material } = {},
+    kaoriMtls: { [key: string]: THREE.Material } = {},
+    renMtls: { [key: string]: THREE.Material } = {},
+    sceneryTextures: { [key: string]: THREE.Material } = {},
+    kaoriTextures: { [key: string]: THREE.Material } = {},
+    renTextures: { [key: string]: THREE.Material } = {};
 
 export function loadTextures(loadingManager: THREE.LoadingManager) {
     /**
@@ -74,7 +77,7 @@ export function loadTextures(loadingManager: THREE.LoadingManager) {
     });
 
 // Ren
-    const renTextures: { [key: string]: any } = {
+    Object.assign(renTextures, {
         eyes: {
             open: textureLoader.load('textures/ren/eyes/Eyes_000.webp'),
             halfOpen: textureLoader.load('textures/ren/eyes/Eyes_001.webp'),
@@ -86,7 +89,7 @@ export function loadTextures(loadingManager: THREE.LoadingManager) {
             open: textureLoader.load('textures/ren/mouths/Mouth_002.webp'),
         },
         uvMap: textureLoader.load('textures/ren/UV Map.webp')
-    }
+    });
 
     Object.values(renTextures).forEach(txt => {
         if (typeof txt === 'object' && !txt.isTexture) {
@@ -186,4 +189,4 @@ export function loadTextures(loadingManager: THREE.LoadingManager) {
     });
 }
 
-export {sceneryMtls, kaoriMtls, renMtls, sceneryTextures, kaoriTextures}
+export {sceneryMtls, kaoriMtls, renMtls, sceneryTextures, kaoriTextures, renTextures}

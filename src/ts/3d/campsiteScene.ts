@@ -6,7 +6,7 @@ import {FBXLoader} from 'three/examples/jsm/loaders/FBXLoader'
 // @ts-ignore
 import {throttle} from 'lodash';
 
-import {sceneryMtls, kaoriMtls, renMtls, sceneryTextures, kaoriTextures} from "./materials.ts";
+import {sceneryMtls, kaoriMtls, renMtls, sceneryTextures, kaoriTextures, renTextures} from "./materials.ts";
 import {transitionToNight} from "./transitionToNight.ts";
 
 export function campsiteScene(loadingManager: THREE.LoadingManager): void {
@@ -193,6 +193,7 @@ export function campsiteScene(loadingManager: THREE.LoadingManager): void {
     let renMixer: THREE.AnimationMixer;
     let renClips: Array<THREE.AnimationClip>;
     let renActions: any;
+    let ren: any;
 
     fbxLoader.load(
         'models/ren.fbx',
@@ -243,6 +244,7 @@ export function campsiteScene(loadingManager: THREE.LoadingManager): void {
                 }
             })
             object.scale.set(.01, .01, .01);
+            ren = object;
             scene.add(object);
         }
     );
@@ -477,9 +479,15 @@ export function campsiteScene(loadingManager: THREE.LoadingManager): void {
 
     const navBurger: HTMLButtonElement | null = document.querySelector('button.navbar-toggler');
 
+    // Kaori blink config
     const kaoriBlink = [kaoriTextures.eyes.open, kaoriTextures.eyes.halfOpen, kaoriTextures.eyes.closed];
     let kaoriBlinkIdx = 0;
     let kaoriIsBlinking = false;
+
+    // Ren blink config
+    const renBlink = [renTextures.eyes.open, renTextures.eyes.halfOpen, renTextures.eyes.closed];
+    let renBlinkIdx = 0;
+    let renIsBlinking = false;
 
     const tick = () => {
         const elapsedTime = clock.getElapsedTime()
@@ -496,6 +504,13 @@ export function campsiteScene(loadingManager: THREE.LoadingManager): void {
             }
         }
 
+        // Make Ren blink randomly
+        if (ren) {
+            if (!renIsBlinking) {
+                if (Math.random() > 0.99) renIsBlinking = true;
+            }
+        }
+
         if (counter >= 0.1) {
             if (kaoriIsBlinking) {
                 kaoriBlinkIdx++;
@@ -503,6 +518,14 @@ export function campsiteScene(loadingManager: THREE.LoadingManager): void {
                 kaoriMtls.eyes.needsUpdate = true;
 
                 if (kaoriBlinkIdx % 3 === 0) kaoriIsBlinking = false;
+            }
+
+            if (renIsBlinking) {
+                renBlinkIdx++;
+                renMtls.eyes.map = renBlink[renBlinkIdx % 3];
+                renMtls.eyes.needsUpdate = true;
+
+                if (renBlinkIdx % 3 === 0) renIsBlinking = false;
             }
             // Fire Animation
             if (fire && isNight) {
