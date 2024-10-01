@@ -500,14 +500,14 @@ export function campsiteScene(loadingManager: THREE.LoadingManager): void {
         // Make Kaori blink randomly
         if (kaori) {
             if (!kaoriIsBlinking) {
-                if (Math.random() > 0.99) kaoriIsBlinking = true;
+                if (Math.random() > 0.995) kaoriIsBlinking = true;
             }
         }
 
         // Make Ren blink randomly
         if (ren) {
             if (!renIsBlinking) {
-                if (Math.random() > 0.99) renIsBlinking = true;
+                if (Math.random() > 0.995) renIsBlinking = true;
             }
         }
 
