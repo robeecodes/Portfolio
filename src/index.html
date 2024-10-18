@@ -109,10 +109,10 @@
         </div>
     </section>
     <section id="projects" class="bg-light">
-        <div class="container p-5 text-center">
+        <div class="container-xxl p-5 text-center">
             <h2 class="display-1 text-dark">Projects</h2>
             <div id="project-filters"
-                 class="input-group mb-3 d-flex w-100 justify-content-md-evenly my-4 px-5 flex-md-row flex-column">
+                 class="input-group mb-3 d-flex w-100 justify-content-md-evenly my-4 px-0 px-sm-5 flex-md-row flex-column">
                 <div class="filter-box d-flex align-items-center mb-3 mx-3 threed">
                     <input type="checkbox" value="3D" aria-label="3D" id="3D">
                     <label class="form-check-label px-4 py-2 rounded-pill" for="3D">3D</label>
@@ -133,11 +133,6 @@
                     <label class="form-check-label px-4 py-2 rounded-pill" for="Interactive">Interactive</label>
                 </div>
 
-                <div class="filter-box d-flex align-items-center mb-3 mx-3 unity">
-                    <input type="checkbox" value="Unity" aria-label="Unity" id="Unity">
-                    <label class="form-check-label px-4 py-2 rounded-pill" for="Unity">Unity</label>
-                </div>
-
                 <div class="filter-box d-flex align-items-center mb-3 mx-3 web-dev">
                     <input type="checkbox" value="Web-Development" aria-label="Web-Development" id="Web-Development">
                     <label class="form-check-label px-4 py-2 rounded-pill" for="Web-Development">Web Development</label>
@@ -145,14 +140,13 @@
             </div>
 
             <div id="projects-grid">
-                <div class="card" style="width: 18rem;" data-tags="Unity,3D,Interactive">
+                <div class="card border rounded shadow-sm mb-2 mb-md-0" data-tags="3D,Interactive">
                     <img src="images/pirate-game.webp" class="card-img-top" alt="Screenshot of a pirate in a tavern.">
                     <div class="card-body">
-                        <h5 class="card-title text-light">Pirates</h5>
+                        <h5 class="card-title fs-3 fw-bolder">Pirates</h5>
                         <h6 class="mb-2 badge rounded-pill threed">3D</h6>
                         <h6 class="mb-2 badge rounded-pill interactive">Interactive</h6>
-                        <h6 class="mb-2 badge rounded-pill unity">Unity</h6>
-                        <p class="card-text text-light">Dock at an unknown island and explore a highly interactive 3d
+                        <p class="card-text fw-light">Dock at an unknown island and explore a highly interactive 3d
                             environment.</p>
                         <a href="https://mega.nz/file/EZAyFLhQ#HzaYjnzRyxu8OVpTgaKXJYWYB8DIxXTl8T07g67C7z4"
                            class="btn btn-primary my-2" target="_blank"><i class="fa-brands fa-windows me-2"></i>Download
@@ -161,14 +155,14 @@
                                 class="fa-brands fa-github me-2"></i>View Repository</a>
                     </div>
                 </div>
-                <div class="card" style="width: 18rem;" data-tags="Interactive,Creative-Coding">
+                <div class="card mb-2 mb-md-0" data-tags="Interactive,Creative-Coding">
                     <img src="images/metal-mansion.webp" class="card-img-top"
                          alt="Screenshot of the Metal Mansion game">
                     <div class="card-body">
-                        <h5 class="card-title text-light">Metal Mansion</h5>
+                        <h5 class="card-title text-light fs-3 fw-bolder">Metal Mansion</h5>
                         <h6 class="mb-2 badge rounded-pill creative-coding">Creative Coding</h6>
                         <h6 class="mb-2 badge rounded-pill interactive">Interactive</h6>
-                        <p class="card-text text-light">A run-and-gun platformer inspired by classics like Mega Man.
+                        <p class="card-text text-light fw-light">A run-and-gun platformer inspired by classics like Mega Man.
                             Choose between two characters with unique abilities and destroy the robot threat.</p>
                         <a href="https://robeecodes.github.io/metal-mansion/" class="btn btn-primary my-2"
                            target="_blank"><i class="fa-solid fa-star-of-life me-2"></i>Play Online</a>
@@ -176,15 +170,15 @@
                            target="_blank"><i class="fa-brands fa-github me-2"></i>View Repository</a>
                     </div>
                 </div>
-                <div class="card" style="width: 18rem;" data-tags="Graphic-Design,Interactive,Web-Development">
+                <div class="card mb-2 mb-md-0" data-tags="Graphic-Design,Interactive,Web-Development">
                     <img src="images/gwds.webp" class="card-img-top"
                          alt="Screenshot of my Graphic and Web Design Studio Portfolio">
                     <div class="card-body">
-                        <h5 class="card-title text-light">Graphic and Web Design Studio</h5>
+                        <h5 class="card-title text-light fs-3 fw-bolder">Graphic and Web Design Studio</h5>
                         <h6 class="mb-2 badge rounded-pill graphic-design">Graphic Design</h6>
                         <h6 class="mb-2 badge rounded-pill interactive">Interactive</h6>
                         <h6 class="mb-2 badge rounded-pill web-dev">Web Development</h6>
-                        <p class="card-text text-light">A portfolio of design pieces relating to the web, poster design
+                        <p class="card-text text-light fw-light">A portfolio of design pieces relating to the web, poster design
                             and typography.</p>
                         <a href="https://robeecodes.github.io/gwds-website/" class="btn btn-primary my-2"
                            target="_blank"><i class="fa-solid fa-link me-2"></i>View Online</a>
@@ -192,59 +186,58 @@
                            target="_blank"><i class="fa-brands fa-github me-2"></i>View Repository</a>
                     </div>
                 </div>
-                <div class="card" style="width: 18rem;" data-tags="Graphic-Design,Interactive,Web-Development">
+                <div class="card mb-2 mb-md-0" data-tags="Graphic-Design,Interactive,Web-Development">
                     <img src="images/create-against-hate.webp" class="card-img-top"
                          alt="Screenshot of my 'Create Against Hate' Website">
                     <div class="card-body">
-                        <h5 class="card-title text-light">Create Against Hate</h5>
+                        <h5 class="card-title text-light fs-3 fw-bolder">Create Against Hate</h5>
                         <h6 class="mb-2 badge rounded-pill graphic-design">Graphic Design</h6>
                         <h6 class="mb-2 badge rounded-pill interactive">Interactive</h6>
                         <h6 class="mb-2 badge rounded-pill web-dev">Web Development</h6>
-                        <p class="card-text text-light">A website concept for a manga-themed charity game jam.</p>
+                        <p class="card-text text-light fw-light">A website concept for a manga-themed charity game jam.</p>
                         <a href="https://create-against-hate.surge.sh/index.html" class="btn btn-primary my-2"
                            target="_blank"><i class="fa-solid fa-link me-2"></i>View Online</a>
                         <a href="https://gitlab.uwe.ac.uk/r34-king/create-against-hate" class="btn btn-primary my-2"
                            target="_blank"><i class="fa-brands fa-gitlab me-2"></i>View Repository</a>
                     </div>
                 </div>
-                <div class="card" style="width: 18rem;" data-tags="Graphic-Design,Creative-Coding">
+                <div class="card mb-2 mb-md-0" data-tags="Graphic-Design,Creative-Coding">
                     <img src="images/icc.webp" class="card-img-top"
                          alt="Screenshot of my Patchwork Pattern Creative Coding Project">
                     <div class="card-body">
-                        <h5 class="card-title text-light">P5.js Artwork</h5>
+                        <h5 class="card-title text-light fs-3 fw-bolder">P5.js Artwork</h5>
                         <h6 class="mb-2 badge rounded-pill creative-coding">Creative Coding</h6>
                         <h6 class="mb-2 badge rounded-pill graphic-design">Graphic Design</h6>
-                        <p class="card-text text-light">A collection of digital art pieces created using P5.js.</p>
+                        <p class="card-text text-light fw-light">A collection of digital art pieces created using P5.js.</p>
                         <a href="https://robeecodes.github.io/icc-semester-one/" class="btn btn-primary my-2"
                            target="_blank"><i class="fa-solid fa-link me-2"></i>View Online</a>
                         <a href="https://github.com/robeecodes/icc-semester-one" class="btn btn-primary my-2"
                            target="_blank"><i class="fa-brands fa-github me-2"></i>View Repository</a>
                     </div>
                 </div>
-                <div class="card" style="width: 18rem;"
-                     data-tags="3D,Graphic-Design,Creative-Coding,Interactive,Web-Development">
+                <div class="card mb-2 mb-md-0" data-tags="3D,Graphic-Design,Creative-Coding,Interactive,Web-Development">
                     <img src="images/portfolio-site.webp" class="card-img-top" alt="Screenshot of my Portfolio">
                     <div class="card-body">
-                        <h5 class="card-title text-light">My Portfolio</h5>
+                        <h5 class="card-title text-light fs-3 fw-bolder">My Portfolio</h5>
                         <h6 class="mb-2 badge rounded-pill threed">3D</h6>
                         <h6 class="mb-2 badge rounded-pill creative-coding">Creative Coding</h6>
                         <h6 class="mb-2 badge rounded-pill graphic-design">Graphic Design</h6>
                         <h6 class="mb-2 badge rounded-pill interactive">Interactive</h6>
                         <h6 class="mb-2 badge rounded-pill web-dev">Web Development</h6>
-                        <p class="card-text text-light">The site you're viewing right now! A website which incorporates
+                        <p class="card-text text-light fw-light">The site you're viewing right now! A website which incorporates
                             3D design elements.</p>
                         <a href="https://github.com/robeecodes/icc-semester-one" class="btn btn-primary my-2"
                            target="_blank"><i class="fa-brands fa-github me-2"></i>View Repository</a>
                     </div>
                 </div>
-                <div class="card" style="width: 18rem;" data-tags="Graphic-Design">
+                <div class="card mb-2 mb-md-0" data-tags="Graphic-Design">
                     <img src="images/apse/annual-cover-after.webp" class="card-img-top"
                          alt="Image of a road going into the sun.">
                     <div class="card-body">
-                        <h5 class="card-title text-light">Graphic Design for <abbr
+                        <h5 class="card-title text-light fs-3 fw-bolder">Graphic Design for <abbr
                                 title="Association for Public Service Excellence">APSE</abbr></h5>
                         <h6 class="mb-2 badge rounded-pill graphic-design">Graphic Design</h6>
-                        <p class="card-text text-light">A collection of designs and photo edits I created while employed
+                        <p class="card-text text-light fw-light">A collection of designs and photo edits I created while employed
                             at APSE.</p>
                         <a href="apse-designs.html" class="btn btn-primary my-2" target="_blank"><i
                                 class="fa-solid fa-link me-2"></i>View Online</a>

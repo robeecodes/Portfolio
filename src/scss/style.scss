@@ -15,7 +15,8 @@ $btn-font-family: 'Lexend Deca', Inter, system-ui, Avenir, Helvetica, Arial, san
 $font-family-sans-serif: 'Lexend Deca', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 
 // Override Bootstrap Colours
-$primary: #f8f9fa;
+$primary: #d9d9d9;
+//$light: #eae9e5;
 
 @import "../../node_modules/bootstrap/scss/bootstrap";
 
@@ -119,27 +120,23 @@ section, footer {
 
 // Colours for tags
 .threed {
-  --colour: black;
+  --colour: #7144b8;
 }
 
 .graphic-design {
-  --colour: ForestGreen;
+  --colour: #478347;
 }
 
 .interactive {
-  --colour: MidnightBlue;
+  --colour: #393993;
 }
 
 .creative-coding {
-  --colour: #eb345e;
-}
-
-.unity {
-  --colour: #1a496a;
+  --colour: #972d44;
 }
 
 .web-dev {
-  --colour: HotPink;
+  --colour: #3594b3;
 }
 
 .filter-box {
@@ -179,8 +176,11 @@ section, footer {
 }
 
 #projects-grid {
-  .card .badge {
-    background-color: var(--colour);
+  .card {
+    width: 23rem;
+    .badge {
+      background-color: var(--colour);
+    }
   }
 }
 
@@ -200,7 +200,7 @@ section, footer {
 
 // General Styling Utils
 .glass {
-  background-image: linear-gradient(to right, hsla(0, 0, 0, 0.75), hsla(0, 0, 0, 0.6), hsla(0, 0, 0, 0.5), hsla(0, 0, 0, 0));
+  background-image: linear-gradient(to right, hsla(0, 0, 0, 0.75), hsla(0, 0, 0, 0.6), hsla(0, 0, 0, 0.5), hsla(0, 0, 0, 0.3), hsla(0, 0, 0, 0));
   backdrop-filter: blur(.1em);
   //box-shadow: 0 0 2em 2em hsla(0, 0, 0, 0.5);
 }
@@ -208,5 +208,11 @@ section, footer {
 @media only screen and (max-width: (calc(992 / 16) * 1em)) {
   #offcanvasNavbar {
     width: 100vw;
+  }
+
+  #projects-grid {
+    .card {
+      width: 20rem;
+    }
   }
 }
