@@ -145,7 +145,8 @@ export function loadTextures(loadingManager: THREE.LoadingManager) {
         }),
         fireMtl: new THREE.MeshLambertMaterial({
             map: sceneryTextures.fireTxts.one,
-            transparent: true
+            transparent: true,
+            side: THREE.DoubleSide
         }),
     });
 

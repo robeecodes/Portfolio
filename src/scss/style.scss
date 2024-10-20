@@ -20,6 +20,12 @@ $primary: #d9d9d9;
 
 @import "../../node_modules/bootstrap/scss/bootstrap";
 
+.lil-gui {
+  position: fixed;
+  left: 0;
+ z-index: 9999;
+}
+
 * {
   box-sizing: border-box;
 }

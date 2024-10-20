@@ -6,8 +6,10 @@ import {FBXLoader} from 'three/examples/jsm/loaders/FBXLoader'
 // @ts-ignore
 import {throttle} from 'lodash';
 
-import {sceneryMtls, kaoriMtls, renMtls, sceneryTextures, kaoriTextures, renTextures} from "./materials.ts";
+import {sceneryMtls, kaoriMtls, sceneryTextures, kaoriTextures} from "./utils/materials.ts";
 import {transitionToNight} from "./transitionToNight.ts";
+import disposeMaterial from "./utils/disposeMaterial.ts";
+import Ren from "./models/ren.ts";
 
 export function campsiteScene(loadingManager: THREE.LoadingManager): void {
     /**
@@ -20,29 +22,17 @@ export function campsiteScene(loadingManager: THREE.LoadingManager): void {
      * Load Models
      */
 
-    // Delete the original maya materials
-    // TODO: Is there a better way to do this?
-    function disposeMaterial(material: THREE.Material) {
-        if (material) {
-            if (material.map) material.map.dispose(); // Dispose of textures
-            if (material.lightMap) material.lightMap.dispose();
-            if (material.bumpMap) material.bumpMap.dispose();
-            if (material.normalMap) material.normalMap.dispose();
-            if (material.specularMap) material.specularMap.dispose();
-            if (material.envMap) material.envMap.dispose();
-            material.dispose(); // Dispose of the material itself
-        }
-    }
-
     // Scene
     // Lights
     let directionalLight: THREE.DirectionalLight;
     let ambientLight: THREE.AmbientLight;
     let pointLight;
     // Fire
-    let fire: THREE.Mesh;
+    let fireMesh: THREE.Mesh;
     let fireLight: THREE.PointLight;
-
+    const firePivot = new THREE.Group();
+    firePivot.position.set(0, 0, 0);
+    scene.add(firePivot);
 
     const fbxLoader = new FBXLoader(loadingManager);
     fbxLoader.load(
@@ -126,9 +116,15 @@ export function campsiteScene(loadingManager: THREE.LoadingManager): void {
                             if (mtl.name === "standardSurface2") (child as THREE.Mesh).material = sceneryMtls.panoramaMtl;
                             if (mtl.name === "Tent1") (child as THREE.Mesh).material = sceneryMtls.tentMtl;
                             if (mtl.name === "Fire") {
-                                fire = child as THREE.Mesh;
-                                fire.material = sceneryMtls.fireMtl;
-                                fire.material.opacity = 0;
+                                fireMesh = child as THREE.Mesh;
+                                const box = new THREE.Box3().setFromObject(fireMesh);
+                                const center = box.getCenter(new THREE.Vector3());
+                                fireMesh.geometry.translate(-center.x, -center.y, -center.z);
+                                fireMesh.position.set(0, 0, 0);
+                                firePivot.add(fireMesh);
+                                fireMesh.scale.set(.01, .01, .01);
+                                fireMesh.material = sceneryMtls.fireMtl;
+                                fireMesh.material.opacity = 0;
                             }
                         }
                     }
@@ -190,64 +186,7 @@ export function campsiteScene(loadingManager: THREE.LoadingManager): void {
     );
 
     // Ren
-    let renMixer: THREE.AnimationMixer;
-    let renClips: Array<THREE.AnimationClip>;
-    let renActions: any;
-    let ren: any;
-
-    fbxLoader.load(
-        'models/ren.fbx',
-        (object: THREE.Group) => {
-            renMixer = new THREE.AnimationMixer(object);
-            renClips = object.animations;
-            renActions = {
-                idle: renMixer.clipAction(THREE.AnimationClip.findByName(renClips, 'Idle')),
-                shoot: renMixer.clipAction(THREE.AnimationClip.findByName(renClips, 'Shoot')),
-            }
-            renMixer.addEventListener('loop', (e: any) => {
-                if (e.action._clip.name === 'Shoot') {
-                    renPending = true;
-                }
-            });
-            object.traverse(function (child: THREE.Mesh | any) {
-                if ((child as THREE.Mesh).isMesh) {
-                    (child as THREE.Mesh).castShadow = true;
-                    (child as THREE.Mesh).receiveShadow = true;
-                    if ((child as THREE.Mesh).material) {
-                        const mtl = (child as THREE.Mesh).material;
-
-                        if (Array.isArray(mtl)) {
-                            // Dispose of old materials before reassigning
-                            mtl.forEach((item) => {
-                                disposeMaterial(item);
-                            });
-
-                            // Reassign new materials
-                            mtl.forEach((item, index) => {
-                                if (item.name === "Ren_Rigged:Mouth") mtl[index] = renMtls.mouth;
-                                if (item.name === "Ren_Rigged:Eyes") mtl[index] = renMtls.eyes;
-                                if (item.name === "Ren_Rigged:Dress1") mtl[index] = renMtls.skinCloth;
-                                if (item.name === "Ren_Rigged:Skin_and_Cloth") mtl[index] = renMtls.skinCloth;
-                                if (item.name === "Ren_Rigged:Hood") mtl[index] = renMtls.boots;
-                            });
-                            (child as THREE.Mesh).material = mtl;
-                        } else {
-                            // Dispose of the old material before reassigning
-                            disposeMaterial(mtl);
-
-                            // Reassign new material
-                            if (mtl.name === "Ren_Rigged:Hair1") (child as THREE.Mesh).material = renMtls.hair;
-                            if (mtl.name === "Ren_Rigged:Hood") (child as THREE.Mesh).material = renMtls.boots;
-                            if (mtl.name === "Ren_Rigged:Skin_and_Cloth") (child as THREE.Mesh).material = renMtls.skinCloth;
-                        }
-                    }
-                }
-            })
-            object.scale.set(.01, .01, .01);
-            ren = object;
-            scene.add(object);
-        }
-    );
+    const ren = new Ren(fbxLoader, scene);
 
     /**
      * Lights
@@ -351,7 +290,7 @@ export function campsiteScene(loadingManager: THREE.LoadingManager): void {
         if (heroMidPoint >= 0 && heroMidPoint <= window.innerHeight) {
             // Hero section is halfway on the screen
             isNight = false;
-            transitionToNight(isNight, ambientLight, directionalLight, fireLight, fire, canvas, () => {
+            transitionToNight(isNight, ambientLight, directionalLight, fireLight, fireMesh, canvas, () => {
                 fireLightActive = isNight;
             });
         }
@@ -359,7 +298,7 @@ export function campsiteScene(loadingManager: THREE.LoadingManager): void {
         else if (skillsMidPoint >= 0 && skillsMidPoint <= window.innerHeight) {
             // Skills section is halfway on the screen
             isNight = true;
-            transitionToNight(isNight, ambientLight, directionalLight, fireLight, fire, canvas, () => {
+            transitionToNight(isNight, ambientLight, directionalLight, fireLight, fireMesh, canvas, () => {
                 fireLightActive = isNight;
             });
         }
@@ -420,46 +359,6 @@ export function campsiteScene(loadingManager: THREE.LoadingManager): void {
         kaoriActions.idle.play();
     }
 
-    // Ren Animation
-    let renShoot = false;
-    let renModifier = 1;
-    let renPending = true;
-
-    const updateRenAnimation = () => {
-        if (renPending) {
-            renModifier = 0.5;
-
-            if (renActions.shoot.enabled) renActions.shoot.fadeOut(0);
-
-            renActions.idle.setEffectiveWeight(1);
-            renActions.shoot.setEffectiveWeight(0);
-
-            renActions.idle.enabled = true;
-            renActions.shoot.enabled = false;
-
-            renActions.idle.play();
-            renPending = false;
-        }
-        if (isNight && !renShoot) {
-            renModifier = 1.5;
-
-            // Smooth transition from 'Idle' to 'Shoot' with crossfade
-            renActions.shoot.reset();
-            renActions.shoot.setEffectiveWeight(1);
-            renActions.idle.fadeOut(1.5);
-
-            renActions.shoot.enabled = true;
-
-            renActions.shoot.crossFadeFrom(renActions.idle, 1.5, true);  // Smooth blend to 'Shoot'
-            renActions.shoot.play();  // Play shoot
-
-            renShoot = true;  // Flag shoot state as true
-        }
-        if (!isNight) {
-            renShoot = false;
-        }
-    }
-
     let isActive = true;
 
     // Event listener for visibility change
@@ -484,15 +383,12 @@ export function campsiteScene(loadingManager: THREE.LoadingManager): void {
     let kaoriBlinkIdx = 0;
     let kaoriIsBlinking = false;
 
-    // Ren blink config
-    const renBlink = [renTextures.eyes.open, renTextures.eyes.halfOpen, renTextures.eyes.closed];
-    let renBlinkIdx = 0;
-    let renIsBlinking = false;
-
     const tick = () => {
         const elapsedTime = clock.getElapsedTime()
         const deltaTime = elapsedTime - previousTime;
         previousTime = elapsedTime;
+
+        ren.update(deltaTime, isNight);
 
         // The counter is used to throttle animation speed (1 frame per ms, essentially)
         counter += deltaTime;
@@ -506,8 +402,8 @@ export function campsiteScene(loadingManager: THREE.LoadingManager): void {
 
         // Make Ren blink randomly
         if (ren) {
-            if (!renIsBlinking) {
-                if (Math.random() > 0.995) renIsBlinking = true;
+            if (!ren.isBlinking) {
+                if (Math.random() > 0.995) ren.isBlinking = true;
             }
         }
 
@@ -520,23 +416,18 @@ export function campsiteScene(loadingManager: THREE.LoadingManager): void {
                 if (kaoriBlinkIdx % 3 === 0) kaoriIsBlinking = false;
             }
 
-            if (renIsBlinking) {
-                renBlinkIdx++;
-                renMtls.eyes.map = renBlink[renBlinkIdx % 3];
-                renMtls.eyes.needsUpdate = true;
+            if (ren.isBlinking) ren.blink();
 
-                if (renBlinkIdx % 3 === 0) renIsBlinking = false;
-            }
             // Fire Animation
-            if (fire && isNight) {
-                if (fire.material.map === sceneryTextures.fireTxts.one) {
-                    fire.material.map = sceneryTextures.fireTxts.two;
-                } else if (fire.material.map === sceneryTextures.fireTxts.two) {
-                    fire.material.map = sceneryTextures.fireTxts.three;
-                } else if (fire.material.map === sceneryTextures.fireTxts.three) {
-                    fire.material.map = sceneryTextures.fireTxts.one;
+            if (fireMesh && isNight) {
+                if (fireMesh.material.map === sceneryTextures.fireTxts.one) {
+                    fireMesh.material.map = sceneryTextures.fireTxts.two;
+                } else if (fireMesh.material.map === sceneryTextures.fireTxts.two) {
+                    fireMesh.material.map = sceneryTextures.fireTxts.three;
+                } else if (fireMesh.material.map === sceneryTextures.fireTxts.three) {
+                    fireMesh.material.map = sceneryTextures.fireTxts.one;
                 }
-                fire.material.needsUpdate = true;
+                fireMesh.material.needsUpdate = true;
             }
             if (fireLight && isNight && fireLightActive) {
                 fireLight.intensity = Math.random() * (1 - 0.5) + 0.5;
@@ -549,12 +440,7 @@ export function campsiteScene(loadingManager: THREE.LoadingManager): void {
             kaoriMixer.update(deltaTime * kaoriModifier);
         }
 
-        if (renMixer && renClips && renActions) {
-            updateRenAnimation();
-            renMixer.update(deltaTime * renModifier);
-        }
-
-        // Animate camera
+        // Animate camera and fire
         if (navBurger?.getAttribute('aria-expanded') === 'false') {
             cameraPositions = {
                 x: 12.1,
@@ -562,6 +448,8 @@ export function campsiteScene(loadingManager: THREE.LoadingManager): void {
                 z: 6
             }
             cameraRotationY = 0.7;
+            firePivot?.rotation.set(0, 0, 0);
+            firePivot?.position.set(11.357, -0.097, 4.497);
         } else {
             cameraPositions = {
                 x: 13,
@@ -569,6 +457,8 @@ export function campsiteScene(loadingManager: THREE.LoadingManager): void {
                 z: 4.2
             }
             cameraRotationY = 0.9;
+            firePivot?.rotation.set(0, 1.056, 0);
+            firePivot?.position.set(11.396, -0.097, 4.333);
         }
 
         // Parallax
