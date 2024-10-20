@@ -120,7 +120,6 @@ export default class Ren {
 
             this.renActions.shoot.reset();
             this.renActions.shoot.setEffectiveWeight(1);
-            this.renActions.shoot.setLoop(THREE.LoopOnce);
             this.renActions.shoot.crossFadeFrom(this.renActions.idle, 1.2, true);
 
             this.renActions.shoot.enabled = true;
@@ -135,10 +134,15 @@ export default class Ren {
                 this.renActions.idle.setEffectiveWeight(1);
                 this.renActions.idle.play();
 
-                this.mixer.removeEventListener('finished', onFinish);
+                setTimeout(() => {
+                        this.renActions.shoot.setEffectiveWeight(0); // Fade out the shoot animation
+                        this.renActions.shoot.enabled = false; // Disable shooting to avoid conflicts
+                }, 250);
+
+                this.mixer.removeEventListener('loop', onFinish);
             }
 
-            this.mixer.addEventListener('finished', onFinish);
+            this.mixer.addEventListener('loop', onFinish);
         }
     }
 
