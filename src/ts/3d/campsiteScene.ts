@@ -6,10 +6,11 @@ import {FBXLoader} from 'three/examples/jsm/loaders/FBXLoader'
 // @ts-ignore
 import {throttle} from 'lodash';
 
-import {sceneryMtls, kaoriMtls, sceneryTextures, kaoriTextures} from "./utils/materials.ts";
+import {sceneryMtls, sceneryTextures} from "./utils/materials.ts";
 import {transitionToNight} from "./transitionToNight.ts";
 import disposeMaterial from "./utils/disposeMaterial.ts";
 import Ren from "./models/ren.ts";
+import Kaori from "./models/kaori.ts";
 
 export function campsiteScene(loadingManager: THREE.LoadingManager): void {
     /**
@@ -136,54 +137,7 @@ export function campsiteScene(loadingManager: THREE.LoadingManager): void {
     );
 
     // Kaori
-    let kaoriMixer: THREE.AnimationMixer;
-    let kaoriClips: Array<THREE.AnimationClip>;
-    let kaoriActions: any;
-    let kaori: any;
-    fbxLoader.load(
-        'models/kaori.fbx',
-        (object: THREE.Group) => {
-            kaoriMixer = new THREE.AnimationMixer(object);
-            kaoriClips = object.animations;
-
-            let danceAnim = THREE.AnimationClip.findByName(kaoriClips, 'Dance');
-
-            kaoriActions = {
-                idle: kaoriMixer.clipAction(THREE.AnimationClip.findByName(kaoriClips, 'Idle')),
-                dance: kaoriMixer.clipAction(THREE.AnimationUtils.subclip(danceAnim, 'Dance', 75, 99)),
-            }
-            object.traverse(function (child: THREE.Mesh | any) {
-                if ((child as THREE.Mesh).isMesh) {
-                    (child as THREE.Mesh).castShadow = true;
-                    (child as THREE.Mesh).receiveShadow = true;
-                    if ((child as THREE.Mesh).material) {
-                        const mtl = (child as THREE.Mesh).material;
-
-                        if (Array.isArray(mtl)) {
-                            mtl.forEach((item) => {
-                                disposeMaterial(item);
-                            });
-                            mtl.forEach((item, index) => {
-                                if (item.name === "Kaori_Rigged:Mouth") mtl[index] = kaoriMtls.mouth;
-                                if (item.name === "Kaori_Rigged:Eyes") mtl[index] = kaoriMtls.eyes;
-                                if (item.name === "Kaori_Rigged:Dress1") mtl[index] = kaoriMtls.skinCloth;
-                                if (item.name === "Kaori_Rigged:Skin_and_Cloth") mtl[index] = kaoriMtls.skinCloth;
-                                if (item.name === "Kaori_Rigged:Hood") mtl[index] = kaoriMtls.hood;
-                            });
-                            (child as THREE.Mesh).material = mtl;
-                        } else {
-                            disposeMaterial(mtl);
-                            if (mtl.name === "Kaori_Rigged:Hair1") (child as THREE.Mesh).material = kaoriMtls.hair;
-                            if (mtl.name === "Kaori_Rigged:Hood") (child as THREE.Mesh).material = kaoriMtls.hood;
-                        }
-                    }
-                }
-            })
-            object.scale.set(.01, .01, .01);
-            kaori = object;
-            scene.add(object);
-        }
-    );
+    const kaori = new Kaori(fbxLoader, scene);
 
     // Ren
     const ren = new Ren(fbxLoader, scene);
@@ -345,20 +299,6 @@ export function campsiteScene(loadingManager: THREE.LoadingManager): void {
     let previousTime = 0;
     let counter = 0;
 
-    // kaoriAnimation
-    let kaoriModifier = 1;
-
-    const updateKaoriAnimation = () => {
-        kaoriModifier = 0.5;
-        kaoriActions.dance.setEffectiveWeight(0);
-        kaoriActions.idle.setEffectiveWeight(1);
-
-        kaoriActions.dance.enabled = false;
-        kaoriActions.idle.enabled = true;
-
-        kaoriActions.idle.play();
-    }
-
     let isActive = true;
 
     // Event listener for visibility change
@@ -378,43 +318,19 @@ export function campsiteScene(loadingManager: THREE.LoadingManager): void {
 
     const navBurger: HTMLButtonElement | null = document.querySelector('button.navbar-toggler');
 
-    // Kaori blink config
-    const kaoriBlink = [kaoriTextures.eyes.open, kaoriTextures.eyes.halfOpen, kaoriTextures.eyes.closed];
-    let kaoriBlinkIdx = 0;
-    let kaoriIsBlinking = false;
-
     const tick = () => {
         const elapsedTime = clock.getElapsedTime()
         const deltaTime = elapsedTime - previousTime;
         previousTime = elapsedTime;
 
+        kaori.update(deltaTime);
         ren.update(deltaTime, isNight);
 
         // The counter is used to throttle animation speed (1 frame per ms, essentially)
         counter += deltaTime;
 
-        // Make Kaori blink randomly
-        if (kaori) {
-            if (!kaoriIsBlinking) {
-                if (Math.random() > 0.995) kaoriIsBlinking = true;
-            }
-        }
-
-        // Make Ren blink randomly
-        if (ren) {
-            if (!ren.isBlinking) {
-                if (Math.random() > 0.995) ren.isBlinking = true;
-            }
-        }
-
         if (counter >= 0.1) {
-            if (kaoriIsBlinking) {
-                kaoriBlinkIdx++;
-                kaoriMtls.eyes.map = kaoriBlink[kaoriBlinkIdx % 3];
-                kaoriMtls.eyes.needsUpdate = true;
-
-                if (kaoriBlinkIdx % 3 === 0) kaoriIsBlinking = false;
-            }
+            if (kaori.isBlinking) kaori.blink();
 
             if (ren.isBlinking) ren.blink();
 
@@ -435,10 +351,10 @@ export function campsiteScene(loadingManager: THREE.LoadingManager): void {
             counter = 0;
         }
 
-        if (kaoriMixer && kaoriClips) {
-            updateKaoriAnimation();
-            kaoriMixer.update(deltaTime * kaoriModifier);
-        }
+        // if (kaoriMixer && kaoriClips) {
+        //     updateKaoriAnimation();
+        //     kaoriMixer.update(deltaTime * kaoriModifier);
+        // }
 
         // Animate camera and fire
         if (navBurger?.getAttribute('aria-expanded') === 'false') {

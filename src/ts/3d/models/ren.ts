@@ -127,7 +127,6 @@ export default class Ren {
             this.renActions.shoot.play();
 
             const onFinish = () => {
-                console.log("finished!");
                 this._modifier = 0.5;
 
                 this.renActions.idle.reset();
@@ -147,6 +146,7 @@ export default class Ren {
     }
 
     public update(deltaTime: number, isNight: boolean) {
+        if (Math.random() > 0.995) this.isBlinking = true;
         if (this.mixer) {
             this.mixer.update(deltaTime * this._modifier);
             if (isNight && !this.hasShot) {
